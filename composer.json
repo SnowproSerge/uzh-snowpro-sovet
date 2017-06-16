@@ -1,0 +1,23 @@
+{
+  "name": "snowserge/php-snowpro-sovet",
+  "description": "Information of meeting snowpro",
+  "keywords": ["PHP", "snowpro.ru"],
+  "type": "application",
+  "homepage": "https://github.com/SnowproSerge/php-snowpro-sovet",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sergey Naryshkin",
+      "homepage": "https://github.com/SnowproSerge/"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.4",
+    "ext-json": "*"
+    },
+  "autoload": {
+    "psr-4": {
+      "Uzh\\Snowpro\\": "src"
+    }
+  }
+}
