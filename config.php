@@ -8,7 +8,7 @@
  * Time: 10:06
  */
 
-use Uzh\Snowpro\Config\Config;
+use Uzh\Snowpro\Core\Config\Config;
 
 require_once 'vendor/autoload.php';
 require_once 'secret_data.php';

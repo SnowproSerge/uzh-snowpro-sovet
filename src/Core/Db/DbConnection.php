@@ -6,16 +6,16 @@
  * Time: 19:40
  */
 
-namespace Uzh\Snowpro\Db;
+namespace Uzh\Snowpro\Core\Db;
 
 /**
  * Class DbUzh
  * @package Uzh\Snowpro\Db
  */
 
-use Uzh\Snowpro\Config\Config;
+use Uzh\Snowpro\Core\Config\Config;
 
-class DbUzh
+class DbConnection
 {
     const F_ONE = "fetchColumn";
     const F_ONE_ROW = "fetch";

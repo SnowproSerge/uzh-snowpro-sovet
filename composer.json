@@ -13,7 +13,8 @@
   ],
   "require": {
     "php": ">=5.3.4",
-    "ext-json": "*"
+    "ext-json": "*",
+    "twig/twig": "^2.0"
     },
   "autoload": {
     "psr-4": {

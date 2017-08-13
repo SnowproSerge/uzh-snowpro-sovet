@@ -6,7 +6,7 @@
  * Time: 11:46
  */
 
-namespace Uzh\Snowpro\Config;
+namespace Uzh\Snowpro\Core\Config;
 
 
 /**
@@ -18,13 +18,13 @@ namespace Uzh\Snowpro\Config;
  * @package Uzh\Snowpro\Config
  */
 
-use \Uzh\Snowpro\Db\DbUzh;
+use \Uzh\Snowpro\Core\Db\DbConnection;
 
 class Config
 {
     /**
      * Экземпляр объекта конфигурации - для организации синглтона
-     * @var \Uzh\Snowpro\Config\Config
+     * @var \Uzh\Snowpro\Core\Config\Config
      */
     private static $instance;
     /**
@@ -33,21 +33,21 @@ class Config
      */
     private $properties;
     /**
-     * @var \Uzh\Snowpro\Db\DbUzh
+     * @var \Uzh\Snowpro\Core\Db\DbConnection
      */
     private $Db;
 
     /**
-     * @return \Uzh\Snowpro\Db\DbUzh
+     * @return \Uzh\Snowpro\Core\Db\DbConnection
      */
     public function getDb()
     {
-        if(!self::$instance->Db) $this->setDb(new DbUzh());
+        if(!self::$instance->Db) $this->setDb(new DbConnection());
         return self::$instance->Db;
     }
 
     /**
-     * @param \Uzh\Snowpro\Db\DbUzh $Db
+     * @param \Uzh\Snowpro\Core\Db\DbConnection $Db
      */
     public function setDb($Db)
     {
