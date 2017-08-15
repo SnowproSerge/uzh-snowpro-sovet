@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d/
+    networks:
+      - front
+      - backend
+  apache:
+    build: ./apache
+    volumes:
+      - ./../:/var/www/
+      - ./apache/php.ini:/usr/local/etc/php.ini
+    networks:
+      - backend
+
+  db:
+    image: "mysql:5.7"
+    volumes:
+      - ./db:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sovet
+      MYSQL_USER: sovet
+      MYSQL_PASSWORD: pass
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=sovet
+      - PMA_PASSWORD=pass
+    volumes:
+      - /sessions
+    networks:
+      - backend
+

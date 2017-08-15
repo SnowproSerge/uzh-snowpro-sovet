@@ -7,7 +7,7 @@
 \Uzh\Snowpro\Core\Config\Config::getConf()->loadConfig(array(
     "SQL_HOST" => "localhost",
     "SQL_PORT" => "3306",
-    "SQL_SCHEMA" => "db1",
-    "SQL_USER" => "user1",
+    "SQL_SCHEMA" => "sovet",
+    "SQL_USER" => "sovet",
     "SQL_PASS" => "pass"
 ));
