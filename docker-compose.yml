@@ -4,22 +4,32 @@ services:
   nginx:
     image: nginx
     volumes:
-      - ./nginx/:/etc/nginx/conf.d/
+      - ./docker/nginx/:/etc/nginx/conf.d/
     networks:
       - front
       - backend
+    ports:
+      - 80:80
+
   apache:
-    build: ./apache
+    build: ./docker/apache
     volumes:
-      - ./../:/var/www/
-      - ./apache/php.ini:/usr/local/etc/php.ini
+      - ./:/var/www/
+      - ./docker/apache/php.ini:/usr/local/etc/php.ini
     networks:
       - backend
+
+#  composer:
+#    restart: 'no'
+#    image: composer/composer:php5
+#    command: install
+#    volumes:
+#      - ./:/var/www/
 
   db:
     image: "mysql:5.7"
     volumes:
-      - ./db:/var/lib/mysql/
+      - ./docker/db:/var/lib/mysql/
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: sovet
@@ -39,3 +49,9 @@ services:
     networks:
       - backend
 
+
+networks:
+    front:
+        external:
+            name: front
+    backend:
