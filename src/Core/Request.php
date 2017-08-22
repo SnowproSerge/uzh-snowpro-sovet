@@ -14,6 +14,11 @@ namespace Uzh\Snowpro\Core;
  */
 class Request
 {
+    const POST = 'POST';
+    const GET = 'GET';
+    const PUT = 'PUT';
+    const DELETE = 'DELETE';
+
     /** @var  $path string путь вызова */
     private $path;
 
@@ -29,12 +34,20 @@ class Request
     /** @var $params array все параметры  */
     private $params;
 
+    /** @var  string $uri Путь без параметров */
+    private $uri;
+
+    /** @var  string $method ьетод запроса */
+    private $method;
+
     /**
      * Request constructor.
      */
     public function __construct()
     {
         $this->path = $_SERVER['REQUEST_URI'];
+        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->uri = stristr($this->path,'?',true);
         $this->get_params = $_GET;
         $this->post_params = $_POST;
         $this->cookies_params = $_COOKIE;
@@ -72,6 +85,22 @@ class Request
     public function getParams()
     {
         return $this->params;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
     }
 
 

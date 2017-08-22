@@ -85,7 +85,7 @@ class Config
      * Магический метод для доступа на чтение к параметру как к свойству объекта
      *
      * @param $name
-     * @return null
+     * @return mixed|null
      */
     public function __get($name)
     {

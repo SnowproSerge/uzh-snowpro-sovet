@@ -7,5 +7,6 @@
 include_once('../config.php');
 
 \Uzh\Snowpro\Core\ApplicationContext::init();
-echo \Uzh\Snowpro\Core\ApplicationContext::getInstance()->getRequest()->getPath();
+echo \Uzh\Snowpro\Core\ApplicationContext::getInstance()->getRequest()->getPath(),"<br>";
+echo \Uzh\Snowpro\Core\ApplicationContext::getInstance()->getRequest()->getUri(),"<br>";
 
