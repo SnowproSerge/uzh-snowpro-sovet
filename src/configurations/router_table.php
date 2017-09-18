@@ -9,7 +9,13 @@
 use Uzh\Snowpro\Core\Request;
 
 return [
-    Request::GET.' /' => ['Default','index'],
-    Request::GET.' admin' => ['Admin','index'],
-    Request::GET.' 404' => ['Errors','404']
+    Request::GET => [
+        '/' => ['Default', 'index'],
+        '/admin' => ['Admin', 'index'],
+        '/404' => ['Errors', '404'],
+        '/test/<param1:\d+>/<param2:\w{2}\d{2}-53>/info' => ['Default', 'test']
+    ],
+    Request::POST => [
+
+    ]
 ];

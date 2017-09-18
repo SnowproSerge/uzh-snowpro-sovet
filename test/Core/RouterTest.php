@@ -37,8 +37,13 @@ class RouterTest extends TestCase
     public function testParsePath()
     {
         $arr = $this->invokeMethod($this->router,'parsePath',['//aaa/bbb/ccc/']);
-        var_dump($arr);
         $this->assertEquals(implode('_',$arr),implode('_',['aaa','bbb','ccc']));
+    }
+
+    public function testGetRoutes()
+    {
+        $arr = $this->router->getRoutes();
+        $this->assertArrayHasKey('GET',$arr);
     }
 
 }

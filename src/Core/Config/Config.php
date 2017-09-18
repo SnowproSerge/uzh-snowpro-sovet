@@ -19,6 +19,7 @@ namespace Uzh\Snowpro\Core\Config;
  */
 
 use \Uzh\Snowpro\Core\Db\DbConnection;
+use Uzh\Snowpro\Core\Exception\BaseException;
 
 class Config
 {
@@ -41,6 +42,7 @@ class Config
      * @var \Uzh\Snowpro\Core\Request
      */
     private $request;
+
     /**
      * @return \Uzh\Snowpro\Core\Db\DbConnection
      */
@@ -93,7 +95,28 @@ class Config
      */
     public function __get($name)
     {
+
         if(isset($this->properties[$name])) return $this->properties[$name];
         else return null;
     }
+    /**
+     * @return \Uzh\Snowpro\Core\Request
+     */
+    public function getRequest(): \Uzh\Snowpro\Core\Request
+    {
+        return $this->request;
+    }
+
+    /**
+     * @param string $name
+     * @throws BaseException
+     */
+    public function setRequest($name)
+    {
+        $requests = Config::getConf()->requests;
+        if(!isset($requests[$name]))
+            throw new BaseException('Bad request class alias:'.$name);
+        $this->request = new $requests[$name]();
+    }
+
 }

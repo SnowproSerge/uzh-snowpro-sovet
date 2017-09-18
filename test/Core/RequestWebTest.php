@@ -32,9 +32,9 @@ class RequestWebTest extends TestCase
             ->method('getRequestMethod')
             ->willReturn('POST');
 
-        $this->request->expects($this->once())
-            ->method('getRequestUri')
-            ->willReturn('/asd/asdasd.html?sdfsd=234');
+//        $this->request->expects($this->once())
+//            ->method('getRequestUri')
+//            ->willReturn('/asd/asdasd.html?sdfsd=234');
 
 //        $this->request->init();
     }

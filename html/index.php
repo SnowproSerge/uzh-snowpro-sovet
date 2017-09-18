@@ -4,8 +4,9 @@
  * @date: 12.08.17
  */
 
-include_once('../config.php');
+include_once('../bootstrap.php');
 
+\Uzh\Snowpro\Core\Config\Config::getConf()->setRequest('web');
 \Uzh\Snowpro\Core\ApplicationContext::init();
 echo \Uzh\Snowpro\Core\ApplicationContext::getRequest()->getPath(),"<br>";
 echo \Uzh\Snowpro\Core\ApplicationContext::getRequest()->getMethod(),"<br>";

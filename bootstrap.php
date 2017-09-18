@@ -11,4 +11,5 @@
 require_once 'vendor/autoload.php';
 
 date_default_timezone_set("Europe/Moscow");
+\Uzh\Snowpro\Core\Config\Config::getConf()->loadConfig(include __DIR__.'/src/configurations/config.php');
 

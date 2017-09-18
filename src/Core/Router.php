@@ -7,6 +7,7 @@
 namespace Uzh\Snowpro\Core;
 
 
+use PHPUnit\Runner\Exception;
 use Uzh\Snowpro\Core\Exception\BaseException;
 
 class Router
@@ -16,7 +17,12 @@ class Router
 
     public function __construct()
     {
-        $this->routes = Config\Config::getConf()->ROUTE_TABLE;
+        try {
+
+            $this->routes = include Config\Config::getConf()->router_table;
+        } catch (Exception $e) {
+            throw new BaseException("Routing table not set :".$e->getMessage());
+        }
 //        if($this->routes === null)
 //            throw new BaseException("Routing table not set!");
     }
@@ -39,5 +45,8 @@ class Router
                 $ret[] =$value;
         }
         return $ret;
+    }
+    public function getRoutes() {
+        return $this->routes;
     }
 }
