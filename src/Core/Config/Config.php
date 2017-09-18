@@ -38,6 +38,10 @@ class Config
     private $Db;
 
     /**
+     * @var \Uzh\Snowpro\Core\Request
+     */
+    private $request;
+    /**
      * @return \Uzh\Snowpro\Core\Db\DbConnection
      */
     public function getDb()

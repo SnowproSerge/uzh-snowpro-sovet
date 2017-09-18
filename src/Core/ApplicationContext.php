@@ -6,6 +6,8 @@
 
 namespace Uzh\Snowpro\Core;
 
+use Uzh\Snowpro\Core\Config\Config;
+
 /**
  * Класс контейнера приложения
  *
@@ -17,8 +19,10 @@ class ApplicationContext
     /** @var $instance ApplicationContext */
     protected static $instance;
 
-    /** @var  $request Request */
+    /** @var  $request RequestWeb */
     protected $request;
+    /** @var  $request Config */
+    protected $config;
 
     /** Инициализация приложения */
     public static function init() {
@@ -27,7 +31,7 @@ class ApplicationContext
 
     protected function __construct()
     {
-        $this->request = new Request();
+        $this->request = new RequestWeb();
 
     }
 
@@ -36,11 +40,11 @@ class ApplicationContext
     }
 
     /**
-     * @return Request
+     * @return RequestWeb
      */
-    public function getRequest()
+    public static function getRequest()
     {
-        return $this->request;
+        return self::getInstance()->request;
     }
 
 

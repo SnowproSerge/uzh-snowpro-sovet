@@ -3,4 +3,4 @@
  * @author Sergey Naryshkin
  * @date: 13.08.17
  */
-require_once('db_config.php');
+return array_merge(include 'db_config.php',include 'router_table.php');

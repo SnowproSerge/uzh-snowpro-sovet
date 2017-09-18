@@ -26,6 +26,11 @@ services:
 #    volumes:
 #      - ./:/var/www/
 
+#  phpunit:
+#    image: "phpunit/phpunit"
+#    volumes:
+#      - ./:/var/www/
+
   db:
     image: "mysql:5.7"
     volumes:

@@ -17,17 +17,27 @@ class Router
     public function __construct()
     {
         $this->routes = Config\Config::getConf()->ROUTE_TABLE;
-        if($this->routes === null)
-            throw new BaseException("Routing table not set!");
+//        if($this->routes === null)
+//            throw new BaseException("Routing table not set!");
     }
 
-    public function route($path, Request $request)
+    public function route($path, RequestWeb $request)
     {
         
     }
 
+    /**
+     * @param $path string
+     * @return array
+     */
     private function parsePath($path)
     {
-        
+        $expl = explode('/',$path);
+        $ret =[];
+        foreach ($expl as $value) {
+            if(!empty($value))
+                $ret[] =$value;
+        }
+        return $ret;
     }
 }

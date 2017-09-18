@@ -6,9 +6,10 @@
  * Time: 8:00
  */
 
-$route_array = array(
-    '' => '',
-    'admin' => 'Admin/index',
-);
+use Uzh\Snowpro\Core\Request;
 
-\Uzh\Snowpro\Core\Config\Config::getConf()->loadConfig(array('ROUTE_TABLE' => $route_array));
+return [
+    Request::GET.' /' => ['Default','index'],
+    Request::GET.' admin' => ['Admin','index'],
+    Request::GET.' 404' => ['Errors','404']
+];
