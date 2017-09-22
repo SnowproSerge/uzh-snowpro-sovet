@@ -23,4 +23,12 @@ class ConfigTest extends TestCase
         Config::getConf()->setRequest('web');
         $this->assertInstanceOf('\Uzh\Snowpro\Core\RequestWeb', Config::getConf()->getRequest());
     }
+
+    /**
+     * @expectedException \Uzh\Snowpro\Core\Exception\BaseException
+     */
+    public function testSetRequestException()
+    {
+        Config::getConf()->setRequest('web1');
+    }
 }

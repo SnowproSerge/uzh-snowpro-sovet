@@ -13,9 +13,9 @@ return [
         '/' => ['Default', 'index'],
         '/admin' => ['Admin', 'index'],
         '/404' => ['Errors', '404'],
-        '/test/<param1:\d+>/<param2:\w{2}\d{2}-53>/info' => ['Default', 'test']
+        '/test/<param1:\d+>/<param2:[a-z]{2}\d{2}-53>/infoget' => ['Default', 'testGet']     //for test
     ],
     Request::POST => [
-
+        '/test/<param1:\d+>/<param2:[a-z]{2}\d{2}-53>/infopost' => ['Default', 'testPost']     //for test
     ]
 ];
