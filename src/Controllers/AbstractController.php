@@ -7,7 +7,8 @@
 namespace Uzh\Snowpro\Controllers;
 
 
-use Uzh\Snowpro\Services\Request;
+
+use Uzh\Snowpro\Core\Request;
 
 abstract class AbstractController
 {

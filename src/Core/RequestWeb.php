@@ -9,6 +9,8 @@ namespace Uzh\Snowpro\Core;
 /**
  * Класс обработки и хранения параметров запроса.
  *
+ * todo: создать данные запроса исходя из метода
+ *
  * Class RequestWeb
  * @package Uzh\Snowpro\Core
  */
