@@ -11,6 +11,9 @@ use Uzh\Snowpro\Core\Config\Config;
 /**
  * Класс контейнера приложения
  *
+ *
+ * todo организовать обработку исключений
+ *
  * Class ApplicationContext
  * @package Uzh\Snowpro\Core
  */
@@ -27,6 +30,7 @@ class ApplicationContext
     /** Инициализация приложения */
     public static function init() {
         self::$instance = new ApplicationContext();
+        $route = Router::init()->route(self::getInstance()->request->getPath(),self::getInstance()->request->getMethod());
     }
 
     protected function __construct()
@@ -46,6 +50,7 @@ class ApplicationContext
     {
         return self::getInstance()->request;
     }
+
 
 
 }

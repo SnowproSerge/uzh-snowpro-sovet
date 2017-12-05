@@ -10,6 +10,12 @@ namespace Uzh\Snowpro\Controllers;
 
 use Uzh\Snowpro\Core\Request;
 
+/**
+ * Class AbstractController
+ *
+ * todo реализовать логику вызова экшина
+ * @package Uzh\Snowpro\Controllers
+ */
 abstract class AbstractController
 {
     /**
@@ -17,7 +23,7 @@ abstract class AbstractController
      */
     protected $request;
 
-    public function actionProcess() {
+    public function actionProcess($action,$path_params) {
 
     }
 }

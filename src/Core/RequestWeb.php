@@ -9,7 +9,6 @@ namespace Uzh\Snowpro\Core;
 /**
  * Класс обработки и хранения параметров запроса.
  *
- * todo: создать данные запроса исходя из метода
  *
  * Class RequestWeb
  * @package Uzh\Snowpro\Core
@@ -30,7 +29,7 @@ class RequestWeb implements Request
     /** @var $cookies_params array параметры cookies */
     private $cookies_params;
 
-    /** @var $params array все параметры  */
+    /** @var $params array все параметры */
     private $params;
 
     /** @var  string $uri Путь без параметров */
@@ -46,11 +45,14 @@ class RequestWeb implements Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
-        $this->path = stristr($this->uri,'?',true);
+        $this->path = stristr($this->uri, '?', true);
         $this->get_params = $_GET;
         $this->post_params = $_POST;
         $this->cookies_params = $_COOKIE;
-        $this->params = array_merge($this->post_params,$this->get_params,$this->cookies_params);
+        if ($this->method === self::GET)
+            $this->params = $this->get_params;
+        else
+            $this->params = $this->post_params;
     }
 
     /**
@@ -60,6 +62,7 @@ class RequestWeb implements Request
     {
         return $this->path;
     }
+
     /**
      * @return string
      */
@@ -76,7 +79,8 @@ class RequestWeb implements Request
         return $this->params;
     }
 
-    public function getRouteString() {
+    public function getRouteString()
+    {
         return $this->method . ' ' . $this->path;
     }
 }

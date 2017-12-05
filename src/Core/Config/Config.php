@@ -21,6 +21,12 @@ namespace Uzh\Snowpro\Core\Config;
 use \Uzh\Snowpro\Core\Db\DbConnection;
 use Uzh\Snowpro\Core\Exception\BaseException;
 
+/**
+ * Class Config
+ * @package Uzh\Snowpro\Core\Config
+ *
+ * @property array router_table
+ */
 class Config
 {
     /**

@@ -21,6 +21,10 @@ class Router
     /** @var  array $path Таблица роутинга */
     private $routes;
 
+    /**
+     * Router constructor.
+     * @throws RoutingException
+     */
     public function __construct()
     {
         try {
@@ -30,6 +34,24 @@ class Router
         }
     }
 
+    /**
+     * Фабричный метод
+     *
+     * @return Router
+     */
+    public static function init()
+    {
+        return  new Router();
+    }
+
+    /**
+     * Поиск маршрута и параметров
+     *
+     * @param $path
+     * @param $method
+     * @return array
+     * @throws RoutingException
+     */
     public function route($path, $method)
     {
         try {
