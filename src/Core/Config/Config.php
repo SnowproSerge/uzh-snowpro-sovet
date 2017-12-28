@@ -18,8 +18,8 @@ namespace Uzh\Snowpro\Core\Config;
  * @package Uzh\Snowpro\Config
  */
 
-use \Uzh\Snowpro\Core\Db\DbConnection;
-use Uzh\Snowpro\Core\Exception\BaseException;
+//use \Uzh\Snowpro\Core\Db\DbConnection;
+use \Uzh\Snowpro\Core\Exception\BaseException;
 
 /**
  * Class Config
@@ -30,67 +30,38 @@ use Uzh\Snowpro\Core\Exception\BaseException;
 class Config
 {
     /**
-     * Экземпляр объекта конфигурации - для организации синглтона
-     * @var \Uzh\Snowpro\Core\Config\Config
-     */
-    private static $instance;
-    /**
      * Массив настроечных параметров
      * @var array
      */
     private $properties;
-    /**
-     * @var \Uzh\Snowpro\Core\Db\DbConnection
-     */
-    private $Db;
+
 
     /**
-     * @var \Uzh\Snowpro\Core\Request
-     */
-    private $request;
-
-    /**
-     * @return \Uzh\Snowpro\Core\Db\DbConnection
-     */
-    public function getDb()
-    {
-        if(!self::$instance->Db) $this->setDb(new DbConnection());
-        return self::$instance->Db;
-    }
-
-    /**
-     * @param \Uzh\Snowpro\Core\Db\DbConnection $Db
-     */
-    public function setDb($Db)
-    {
-        self::$instance->Db = $Db;
-    }
-
-    /**
-     * Реализация синглтона
      * Config constructor.
+     * @param string $fileConfig
+     * @throws \Exception
      */
-    private function __construct()
+    public function __construct($fileConfig)
     {
-    }
+        if(!file_exists($fileConfig)) {
+            throw new BaseException('Not exist file '.$fileConfig);
+        }
+        $config = include ($fileConfig);
 
-    /**
-     * Получение общего объекта конфигурации
-     * @return static
-     */
-    public static function getConf()
-    {
-        if (!self::$instance) self::$instance = new static();
-        return self::$instance;
+        $this->loadConfig($config);
     }
 
     /**
      * Загрузка переменных конфигурации через массив
      * @param array $arr
      */
-    public function loadConfig(array $arr) {
-        if(is_array($this->properties) and count($this->properties)) $this->properties= array_merge($this->properties,$arr);
-        else $this->properties = $arr;
+    public function loadConfig(array $arr): void
+    {
+        if(\is_array($this->properties) && \count($this->properties)) {
+            $this->properties = array_merge($this->properties, $arr);
+        } else {
+            $this->properties = $arr;
+        }
     }
 
     /**
@@ -102,27 +73,27 @@ class Config
     public function __get($name)
     {
 
-        if(isset($this->properties[$name])) return $this->properties[$name];
-        else return null;
-    }
-    /**
-     * @return \Uzh\Snowpro\Core\Request
-     */
-    public function getRequest(): \Uzh\Snowpro\Core\Request
-    {
-        return $this->request;
+        if(isset($this->properties[$name])) {
+            return $this->properties[$name];
+        }
+        return null;
     }
 
     /**
-     * @param string $name
+     * Магический метод для доступа на запись к параметру как к свойству объекта
+     *
+     * @param $name
+     * @param $value
+     * @return mixed|null
      * @throws BaseException
      */
-    public function setRequest($name)
+    public function __set($name,$value)
     {
-        $requests = Config::getConf()->requests;
-        if(!isset($requests[$name]))
-            throw new BaseException('Bad request class alias:'.$name);
-        $this->request = new $requests[$name]();
+        throw new BaseException("You can't set config parameters!");
     }
 
+    public function __isset($name)
+    {
+        return isset($this->properties[$name]);
+    }
 }

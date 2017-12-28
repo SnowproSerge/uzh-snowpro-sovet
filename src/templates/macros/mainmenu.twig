@@ -1,0 +1,12 @@
+{% macro mainmenu(items) %}
+    {%  import _self as menus %}
+    {% for item in items %}
+        {% if item is iterable %}
+            {{ menus.menu1(item) }}
+        {% else %}
+            <li class="active"><a href="">Home</a></li>
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+{% macro menu1(items) %}
+{% emdmacro %}

@@ -45,14 +45,20 @@ class RequestWeb implements Request
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->uri = $_SERVER['REQUEST_URI'];
-        $this->path = stristr($this->uri, '?', true);
+        if(($posPathEnd =strpos($this->uri,'?')) !== false) {
+            $this->path = substr($this->uri, '0', $posPathEnd);
+        }else {
+            $this->path = $this->uri;
+        }
         $this->get_params = $_GET;
         $this->post_params = $_POST;
         $this->cookies_params = $_COOKIE;
-        if ($this->method === self::GET)
+        if ($this->method === self::GET) {
             $this->params = $this->get_params;
-        else
+        }
+        else {
             $this->params = $this->post_params;
+        }
     }
 
     /**
@@ -83,4 +89,37 @@ class RequestWeb implements Request
     {
         return $this->method . ' ' . $this->path;
     }
+
+    /**
+     * @return array
+     */
+    public function getGetParams(): array
+    {
+        return $this->get_params;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPostParams(): array
+    {
+        return $this->post_params;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCookiesParams(): array
+    {
+        return $this->cookies_params;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUri(): string
+    {
+        return $this->uri;
+    }
+
 }

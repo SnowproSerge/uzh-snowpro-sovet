@@ -23,25 +23,10 @@ class Router
 
     /**
      * Router constructor.
-     * @throws RoutingException
      */
-    public function __construct()
+    public function __construct($routes)
     {
-        try {
-            $this->routes = include Config\Config::getConf()->router_table;
-        } catch (\Exception $e) {
-            throw new RoutingException("Routing table not set :" . $e->getMessage());
-        }
-    }
-
-    /**
-     * Фабричный метод
-     *
-     * @return Router
-     */
-    public static function init()
-    {
-        return  new Router();
+        $this->routes = $routes;
     }
 
     /**
@@ -52,7 +37,7 @@ class Router
      * @return array
      * @throws RoutingException
      */
-    public function route($path, $method)
+    public function route($path, $method): array
     {
         try {
             $routes = $this->routes[$method];
@@ -60,6 +45,12 @@ class Router
             foreach ($routes as $template=>$route) {
                 if(($param_array = $this->checkRoute($path_array,$template)) !== null) {
                     return [$route[0],$route[1],$param_array];
+                }
+            }
+            $routes = $this->routes[Request::ALL];
+            foreach ($routes as $template => $route) {
+                if (($param_array = $this->checkRoute($path_array, $template)) !== null) {
+                    return array($route[0], $route[1], $param_array);
                 }
             }
         } catch (\Exception $e) {
@@ -75,19 +66,24 @@ class Router
      * @param string $rout
      * @return array|null
      */
-    private function checkRoute(array $path, string $rout) {
+    private function checkRoute(array $path, string $rout): ?array
+    {
         $test_arr = $this->parsePath($rout);
         $ret_array = [];
-        if(count($test_arr) != count($path))
+        $iMax = \count($test_arr);
+        if($iMax != \count($path)) {
             return null;
+        }
 
-        for ($i= 0; $i< count($test_arr);$i++) {
+        for ($i= 0;  $i< $iMax; $i++) {
             if(preg_match('/^<([a-zA-Z]\w*):(.+)>$/',$test_arr[$i],$matches)) {
-                if(!preg_match('/'.$matches[2].'/',$path[$i],$value))
+                if(!preg_match('/'.$matches[2].'/',$path[$i],$value)) {
                     return null;
+                }
                 $ret_array[$matches[1]] = $value[0];
-            } elseif ($test_arr[$i] !== $path[$i])
+            } elseif ($test_arr[$i] !== $path[$i]) {
                 return null;
+            }
         }
         return $ret_array;
     }
@@ -95,18 +91,19 @@ class Router
      * @param $path string
      * @return array
      */
-    private function parsePath(string $path)
+    private function parsePath(string $path): array
     {
         $expl = explode('/', $path);
         $ret = [];
         foreach ($expl as $value) {
-            if (!empty($value))
+            if (!empty($value)) {
                 $ret[] = $value;
+            }
         }
         return $ret;
     }
 
-    public function getRoutes()
+    public function getRoutes(): array
     {
         return $this->routes;
     }

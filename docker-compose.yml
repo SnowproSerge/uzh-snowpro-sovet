@@ -9,7 +9,7 @@ services:
       - front
       - backend
     ports:
-      - 80:80
+      - 8080:8080
 
   apache:
     build: ./docker/apache
@@ -42,17 +42,20 @@ services:
       MYSQL_PASSWORD: pass
     networks:
       - backend
+      - front
+    ports:
+      - 3306:3306
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=sovet
-      - PMA_PASSWORD=pass
-    volumes:
-      - /sessions
-    networks:
-      - backend
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin:latest
+#    environment:
+#      - PMA_HOST=db
+#      - PMA_USER=sovet
+#      - PMA_PASSWORD=pass
+#    volumes:
+#      - /sessions
+#    networks:
+#      - backend
 
 
 networks:

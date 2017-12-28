@@ -12,10 +12,11 @@ namespace Uzh\Snowpro\Core;
 interface Request
 {
 
-    const POST = 'POST';
-    const GET = 'GET';
-    const PUT = 'PUT';
-    const DELETE = 'DELETE';
+    public const POST = 'POST';
+    public const GET = 'GET';
+    public const PUT = 'PUT';
+    public const DELETE = 'DELETE';
+    public const ALL      = '*';
 
     public function getPath();
 
