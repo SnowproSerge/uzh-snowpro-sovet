@@ -6,9 +6,5 @@
 
 include_once('../bootstrap.php');
 
-\Uzh\Snowpro\Core\Config\Config::getConf()->setRequest('web');
-\Uzh\Snowpro\Core\ApplicationContext::init();
-echo \Uzh\Snowpro\Core\ApplicationContext::getRequest()->getPath(),"<br>";
-echo \Uzh\Snowpro\Core\ApplicationContext::getRequest()->getMethod(),"<br>";
-echo print_r(\Uzh\Snowpro\Core\ApplicationContext::getRequest()->getParams(),true),"<br>";
+\Uzh\Snowpro\Core\App::initApp(__DIR__.'/../src/configurations/config.php');
 

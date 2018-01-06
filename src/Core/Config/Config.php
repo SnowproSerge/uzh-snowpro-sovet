@@ -24,8 +24,10 @@ use \Uzh\Snowpro\Core\Exception\BaseException;
 /**
  * Class Config
  * @package Uzh\Snowpro\Core\Config
- *
+ * @property string base_dir
  * @property array router_table
+ * @property array main_menu
+ *
  */
 class Config
 {
@@ -47,7 +49,6 @@ class Config
             throw new BaseException('Not exist file '.$fileConfig);
         }
         $config = include ($fileConfig);
-
         $this->loadConfig($config);
     }
 

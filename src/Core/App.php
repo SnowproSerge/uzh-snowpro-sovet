@@ -9,6 +9,7 @@ namespace Uzh\Snowpro\Core;
 
 use Uzh\Snowpro\Core\Config\Config;
 use Uzh\Snowpro\Core\Exception\RoutingException;
+use Uzh\Snowpro\Core\Templater\TwigTemplater;
 use Uzh\Snowpro\ExceptionHandler\DefaultExceptionHandler;
 use Uzh\Snowpro\ExceptionHandler\WebExceptionHandler;
 
@@ -48,14 +49,16 @@ class App
     {
         try {                           // Get controller and actions
             list($contName,$action,$params) = $this->router->route($this->request->getPath(), $this->request->getMethod());
-            $contFullName ='\\SimAppletWifc\\Controller\\'.$contName.'Controller';
+            $contFullName ='\\Uzh\\Snowpro\\Controller\\'.$contName.'Controller';
             $controller = new $contFullName();
             if(!($controller instanceof AbstractController)) {
                 throw new RoutingException('Bad controller name: ' . print_r($controller,true));
             }
-            $twigLoader = new \Twig_Loader_Filesystem($this->config->base_dir.'/templates');
-            $this->templater = new \Twig_Environment($twigLoader,array('debug' => true, 'cache' => $this->config->base_dir.'/cache', 'auto_reload' => true));
+//            $twigLoader = new \Twig_Loader_Filesystem($this->config->base_dir.'/templates');
+//            $this->templater = new \Twig_Environment($twigLoader,array('debug' => true, 'cache' => $this->config->base_dir.'/cache', 'auto_reload' => true));
+            $this->templater = TwigTemplater::init($this->config->base_dir.'templates',$this->config->base_dir.'/cache');
 //            $this->templater = new \Twig_Environment($twigLoader,array('cache' => $this->config->base_dir.'/cache' ));
+
             $controller->actionProcess($action,$params);
         } catch (\Exception $e) {
             $this->errorHandler->handleException($e);
@@ -66,7 +69,7 @@ class App
     {
         $this->config = new Config($config);
         $this->request = new RequestWeb();   // todo : from Config
-        $this->router = new Router($this->config->routes);
+        $this->router = new Router($this->config->router_table);
 
         $this->errorHandler = new WebExceptionHandler();  // todo : from Config
         set_exception_handler(array(\get_class($this->errorHandler),'handleException'));

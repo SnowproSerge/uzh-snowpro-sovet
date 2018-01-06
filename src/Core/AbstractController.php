@@ -5,6 +5,7 @@
  */
 
 namespace Uzh\Snowpro\Core;
+
 use Uzh\Snowpro\Core\Exception\RoutingException;
 
 /**
@@ -16,17 +17,17 @@ use Uzh\Snowpro\Core\Exception\RoutingException;
  * необходимые для отображения $viewParams
  *
  */
-class AbstractController
+abstract class AbstractController
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $viewParams;
 
-    /**
-     * @var array
-     */
+    /**  @var array */
     protected $pathParams;
+
+    /** @var array */
+    protected $actionRoles;
+
     /**
      * AbstractController constructor.
      */
@@ -35,6 +36,10 @@ class AbstractController
         $this->viewParams = array();
     }
 
+    /**
+     * Заполнение таблицы доступа
+     */
+    protected abstract function setRestrictions();
     /**
      *
      * Метод получает имя action, запускает его и поле вызывает полученный шаблон с полученными параметрвами
@@ -45,15 +50,26 @@ class AbstractController
      */
     public function actionProcess($action, $pathParams): void
     {
-        $actionName = $action.'Action';
-        if(method_exists($this,$actionName)) {
+        $actionName = $action . 'Action';
+        if (method_exists($this, $actionName)) {
             $this->pathParams = $pathParams;
             $viewName = $this->$actionName();
             $view = new View($viewName);
             $view->show($this->viewParams);
 
         } else {
-            throw new RoutingException('Bad action name ' .$actionName);
+            throw new RoutingException('Bad action name ' . $actionName);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getActionRole($action): string
+    {
+        if (in_array($action, $this->actionRoles))
+            return $this->actionRoles[$action];
+        else
+            return "*";
     }
 }
