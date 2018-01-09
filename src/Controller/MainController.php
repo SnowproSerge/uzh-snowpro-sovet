@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Controller;
 
 
 use Uzh\Snowpro\Core\AbstractController;
+use Uzh\Snowpro\Core\App;
 
 class MainController extends AbstractController
 {
@@ -18,10 +19,12 @@ class MainController extends AbstractController
     protected function setRestrictions()
     {
         // TODO: Implement setRestrictions() method.
+        $this->actionRoles = [];
     }
 
     public function indexAction()
     {
+        App::logger()->addInfo('Action info');
         return "test.twig";
     }
 

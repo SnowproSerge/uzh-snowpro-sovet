@@ -7,11 +7,14 @@
 namespace Uzh\Snowpro\Core;
 
 
+use Monolog\Handler\ChromePHPHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Uzh\Snowpro\Core\Config\Config;
 use Uzh\Snowpro\Core\Exception\RoutingException;
+use Uzh\Snowpro\Core\Security\Auth;
 use Uzh\Snowpro\Core\Templater\TwigTemplater;
 use Uzh\Snowpro\ExceptionHandler\DefaultExceptionHandler;
-use Uzh\Snowpro\ExceptionHandler\WebExceptionHandler;
 
 class App
 {
@@ -22,57 +25,55 @@ class App
     protected $request;
     /** @var  $request Config */
     protected $config;
-
-    /**
-     * @var
-     */
+    /** @var Templater\Templater */
     protected $templater;
-    /**
-     * @var DefaultExceptionHandler
-     */
+    /** @var DefaultExceptionHandler */
     protected $errorHandler;
+    /** @var Auth */
+    protected $auth;
+    /** @var Logger */
+    protected $logger;
 
-    /**
-     * @var Router
-     */
+    /** @var Router */
     protected $router;
 
     /** Инициализация приложения
      * @param string $config относительный путь файла конфигурации
      */
-    public static function initApp($config) {
-        self::$instance = new self($config);
+    public static function initApp($config)
+    {
+        self::$instance = new static($config);
         self::$instance->init();
     }
 
     protected function init()
     {
         try {                           // Get controller and actions
-            list($contName,$action,$params) = $this->router->route($this->request->getPath(), $this->request->getMethod());
-            $contFullName ='\\Uzh\\Snowpro\\Controller\\'.$contName.'Controller';
+            set_exception_handler(array(\get_class($this->errorHandler), 'handleException'));
+            list($contName, $action, $params) = $this->router->route($this->request->getPath(), $this->request->getMethod());
+            $contFullName = '\\Uzh\\Snowpro\\Controller\\' . $contName . 'Controller';
             $controller = new $contFullName();
-            if(!($controller instanceof AbstractController)) {
-                throw new RoutingException('Bad controller name: ' . print_r($controller,true));
+            if (!($controller instanceof AbstractController)) {
+                throw new RoutingException('Bad controller name: ' . print_r($controller, true));
             }
-//            $twigLoader = new \Twig_Loader_Filesystem($this->config->base_dir.'/templates');
-//            $this->templater = new \Twig_Environment($twigLoader,array('debug' => true, 'cache' => $this->config->base_dir.'/cache', 'auto_reload' => true));
-            $this->templater = TwigTemplater::init($this->config->base_dir.'templates',$this->config->base_dir.'/cache');
-//            $this->templater = new \Twig_Environment($twigLoader,array('cache' => $this->config->base_dir.'/cache' ));
-
-            $controller->actionProcess($action,$params);
+            $this->templater = TwigTemplater::init($this->config->base_dir . 'templates', $this->config->base_dir . '/cache');
+            $this->auth->init();
+            $controller->setAuth($this->auth);
+            $controller->actionProcess($action, $params);
         } catch (\Exception $e) {
             $this->errorHandler->handleException($e);
             exit();
         }
     }
+
     protected function __construct($config)
     {
         $this->config = new Config($config);
-        $this->request = new RequestWeb();   // todo : from Config
         $this->router = new Router($this->config->router_table);
+        $this->logger = new Logger('main');
+//        $this->logger->pushHandler(new ChromePHPHandler($this->config->logger['path'], $this->config->logger['level']));
+        $this->logger->pushHandler(new StreamHandler($this->config->logger['path'], $this->config->logger['level']));
 
-        $this->errorHandler = new WebExceptionHandler();  // todo : from Config
-        set_exception_handler(array(\get_class($this->errorHandler),'handleException'));
     }
 
 
@@ -111,5 +112,26 @@ class App
     public static function template()
     {
         return self::$instance->getTemplater();
+    }
+
+    /**
+     * @return Auth
+     */
+    public function getAuth(): Auth
+    {
+        return $this->auth;
+    }
+
+    /**
+     * @return Logger
+     */
+    public function getLogger(): Logger
+    {
+        return $this->logger;
+    }
+
+    public static function logger()
+    {
+        return self::$instance->getLogger();
     }
 }

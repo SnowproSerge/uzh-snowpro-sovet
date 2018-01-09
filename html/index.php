@@ -5,6 +5,5 @@
  */
 
 include_once('../bootstrap.php');
-
-\Uzh\Snowpro\Core\App::initApp(__DIR__.'/../src/configurations/config.php');
+\Uzh\Snowpro\Services\SnowproWebApp::initApp(__DIR__.'/../src/configurations/config.php');
 

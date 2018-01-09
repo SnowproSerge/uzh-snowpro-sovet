@@ -6,7 +6,10 @@
 
 namespace Uzh\Snowpro\Core;
 
+use PHPUnit\Runner\Exception;
 use Uzh\Snowpro\Core\Exception\RoutingException;
+use Uzh\Snowpro\Core\Security\Auth;
+use Uzh\Snowpro\Core\Security\Role;
 
 /**
  * Class AbstractController
@@ -27,6 +30,8 @@ abstract class AbstractController
 
     /** @var array */
     protected $actionRoles;
+    /** @var Auth */
+    protected $auth;
 
     /**
      * AbstractController constructor.
@@ -34,6 +39,7 @@ abstract class AbstractController
     public function __construct()
     {
         $this->viewParams = array();
+        $this->setRestrictions();
     }
 
     /**
@@ -52,6 +58,8 @@ abstract class AbstractController
     {
         $actionName = $action . 'Action';
         if (method_exists($this, $actionName)) {
+            if(!$this->isAuthAction($action))
+                throw new Exception('Недостаточно прав для использования! Обратитесь к администратору.');
             $this->pathParams = $pathParams;
             $viewName = $this->$actionName();
             $view = new View($viewName);
@@ -63,13 +71,25 @@ abstract class AbstractController
     }
 
     /**
-     * @return string
+     * @param $action
+     * @return bool
      */
-    public function getActionRole($action): string
+    public function isAuthAction($action): bool
     {
         if (in_array($action, $this->actionRoles))
-            return $this->actionRoles[$action];
-        else
-            return "*";
+            return true;
+        if ($this->auth->getRole()->getRole() == Role::ADMIN)
+            return true;
+        return (in_array($this->auth->getRole()->getRole(),$this->actionRoles[$action]));
+
     }
+
+    /**
+     * @param Auth $auth
+     */
+    public function setAuth(Auth $auth): void
+    {
+        $this->auth = $auth;
+    }
+
 }

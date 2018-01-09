@@ -7,3 +7,4 @@ $config_data = array(
     'BASE_DIR' => __DIR__,
     'ROUTER_TABLE' => ''
 );
+var_dump($config_data);

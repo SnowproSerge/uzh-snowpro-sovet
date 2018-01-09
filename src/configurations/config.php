@@ -12,5 +12,10 @@ return [
     'db_config' => include __DIR__.'/db_config.php',
     'requests' => [
         'web' => RequestWeb::class
+    ],
+    'logger' => [
+        'handler' => 'ChromePHPHandler',
+        'path' => __DIR__. '/../../logs/main.log',
+        'level' => \Monolog\Logger::DEBUG
     ]
 ];

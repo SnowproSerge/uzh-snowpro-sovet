@@ -7,6 +7,8 @@
 namespace Uzh\Snowpro\ExceptionHandler;
 
 
+use Uzh\Snowpro\Core\App;
+
 class WebExceptionHandler implements DefaultExceptionHandler
 {
     /**
@@ -14,7 +16,9 @@ class WebExceptionHandler implements DefaultExceptionHandler
      */
     public function handleException($e): void
     {
+        App::logger()->addInfo('Error !!!');
         echo $e->getMessage(),"\n";
         echo $e->getTraceAsString(),"\n";
     }
+
 }
