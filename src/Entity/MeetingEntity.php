@@ -18,11 +18,16 @@ use Uzh\Snowpro\Core\Data\AbstractEntity;
 class MeetingEntity extends AbstractEntity
 {
     /** @var int */
-    public $id;
+    public $idMeeting;
     /** @var SovetEntity */
     public $Sovet;
     /** @var int Unix timestamp */
     public $datesov;
     /** @var string */
     public $title;
+
+    public function isNew()
+    {
+        return empty($this->idMeeting);
+    }
 }

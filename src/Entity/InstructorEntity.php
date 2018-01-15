@@ -18,7 +18,7 @@ use Uzh\Snowpro\Core\Data\AbstractEntity;
 class InstructorEntity extends AbstractEntity
 {
     /** @var int */
-    public $idInstr;
+    public $idInstructor;
     /** @var string */
     public $fum;
     /** @var string */
@@ -27,4 +27,9 @@ class InstructorEntity extends AbstractEntity
     public $nic;
     /** @var string */
     public $userhash;
+
+    public function isNew()
+    {
+        return empty($this->idInstructor);
+    }
 }

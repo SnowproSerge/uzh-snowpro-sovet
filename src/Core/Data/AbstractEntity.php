@@ -9,5 +9,5 @@ namespace Uzh\Snowpro\Core\Data;
 
 abstract class AbstractEntity
 {
-
+    abstract public function isNew();
 }

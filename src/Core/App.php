@@ -11,6 +11,7 @@ namespace Uzh\Snowpro\Core;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Uzh\Snowpro\Core\Config\Config;
+use Uzh\Snowpro\Core\Data\DbConnection;
 use Uzh\Snowpro\Core\Exception\RoutingException;
 use Uzh\Snowpro\Core\Security\Auth;
 use Uzh\Snowpro\Core\Templater\TwigTemplater;
@@ -33,6 +34,8 @@ class App
     protected $auth;
     /** @var Logger */
     protected $logger;
+    /** @var DbConnection */
+    protected $dbConnect;
 
     /** @var Router */
     protected $router;
@@ -73,6 +76,7 @@ class App
         $this->logger = new Logger('main');
 //        $this->logger->pushHandler(new ChromePHPHandler($this->config->logger['path'], $this->config->logger['level']));
         $this->logger->pushHandler(new StreamHandler($this->config->logger['path'], $this->config->logger['level']));
+        $this->dbConnect = new DbConnection();
 
     }
 

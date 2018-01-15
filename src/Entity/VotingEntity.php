@@ -24,4 +24,9 @@ class VotingEntity extends AbstractEntity
     public $member;
     /** @var int */
     public $vote;
+
+    public function isNew()
+    {
+        return empty($this->idVoting);
+    }
 }

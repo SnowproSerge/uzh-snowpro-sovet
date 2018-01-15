@@ -28,4 +28,9 @@ class MemberEntity extends AbstractEntity
     public $lname;
     /** @var string */
     public $programm;
+
+    public function isNew()
+    {
+        return empty($this->idMember);
+    }
 }

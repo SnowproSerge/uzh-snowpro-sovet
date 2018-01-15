@@ -33,4 +33,9 @@ public $idPresence;
     public $verdict;
     /** @var int :todo make Entity */
     public $idTema;
+
+    public function isNew()
+    {
+        return empty($this->idQuest);
+    }
 }

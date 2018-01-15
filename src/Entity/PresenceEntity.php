@@ -7,7 +7,6 @@
 namespace Uzh\Snowpro\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
-use Uzh\Snowpro\Repository\MemberRepository;
 
 /**
  * Сущность присутствие на собрании
@@ -25,4 +24,9 @@ class PresenceEntity extends AbstractEntity
     public $member;
     /** @var InstructorEntity */
     public $instr;
+
+    public function isNew()
+    {
+        return empty($this->idPresence);
+    }
 }
