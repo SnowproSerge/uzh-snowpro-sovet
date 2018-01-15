@@ -6,19 +6,21 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+
 /**
  * Сущность вопрос
  *
  * Class QuestEntity
  * @package Uzh\Snowpro\Entity
  */
-class QuestEntity
+class QuestEntity extends AbstractEntity
 {
 public $idPresence;
     /** @var int */
     public $idQuest;
-    /** @var int */
-    public $idMeeting;
+    /** @var MeetingEntity */
+    public $meeting;
     /** @var int */
     public $flVote;
     /** @var string */
@@ -29,6 +31,6 @@ public $idPresence;
     public $descr;
     /** @var string */
     public $verdict;
-    /** @var int */
+    /** @var int :todo make Entity */
     public $idTema;
 }

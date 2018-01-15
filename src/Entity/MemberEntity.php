@@ -6,20 +6,22 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+
 /**
  * Сущность член совета
  *
  * Class MemberEntity
  * @package Uzh\Snowpro\Entity
  */
-class MemberEntity
+class MemberEntity extends AbstractEntity
 {
     /** @var int */
     public $idMember;
-    /** @var int */
-    public $idSovet;
-    /** @var int */
-    public $idInstr;
+    /** @var SovetEntity */
+    public $sovet;
+    /** @var InstructorEntity */
+    public $instr;
     /** @var string */
     public $fname;
     /** @var string */

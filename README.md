@@ -10,8 +10,8 @@ docker run --rm --interactive --tty --volume C:\work\PhpProject\uzh-snowpro-sove
 docker-machine create --driver hyperv vm
 
 - запуск докер машины
-: cd 'C:\Program Files\Docker\Docker\resources\bin\'
-: docker-machine.exe env vm
+ cd 'C:\Program Files\Docker\Docker\resources\bin\'
+ docker-machine.exe env vm
 
 docker-machine env vm /
  export DOCKER_TLS_VERIFY="1" /

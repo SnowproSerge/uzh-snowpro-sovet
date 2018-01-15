@@ -6,7 +6,7 @@
  * Time: 19:40
  */
 
-namespace Uzh\Snowpro\Core\Db;
+namespace Uzh\Snowpro\Core\Data;
 
 /**
  * todo: отделить получение данных из конфига (в конструктор) от инициализации соъединения ( в отдельный метод)

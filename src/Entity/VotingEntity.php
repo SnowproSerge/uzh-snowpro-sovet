@@ -6,20 +6,22 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+
 /**
  * Сущность голосование
  *
  * Class VotingEntity
  * @package Uzh\Snowpro\Entity
  */
-class VotingEntity
+class VotingEntity extends AbstractEntity
 {
     /** @var int */
     public $idVoting;
-    /** @var int */
-    public $idQuest;
-    /** @var int */
-    public $idMember;
+    /** @var QuestEntity */
+    public $quest;
+    /** @var MemberEntity */
+    public $member;
     /** @var int */
     public $vote;
 }

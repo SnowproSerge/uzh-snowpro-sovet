@@ -6,18 +6,21 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+
+
 /**
  *
  * Сущность встреча
  * Class MeetingEntity
  * @package Uzh\Snowpro\Entity
  */
-class MeetingEntity
+class MeetingEntity extends AbstractEntity
 {
     /** @var int */
     public $id;
-    /** @var int */
-    public $idSovet;
+    /** @var SovetEntity */
+    public $Sovet;
     /** @var int Unix timestamp */
     public $datesov;
     /** @var string */

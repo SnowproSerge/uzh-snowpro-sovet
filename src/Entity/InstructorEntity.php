@@ -6,13 +6,16 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+
+
 /**
  * Сущность инструктор
  *
  * Class InstructorEntity
  * @package Uzh\Snowpro\Entity
  */
-class InstructorEntity
+class InstructorEntity extends AbstractEntity
 {
     /** @var int */
     public $idInstr;

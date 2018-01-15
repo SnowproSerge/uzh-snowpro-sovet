@@ -6,13 +6,15 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+
 /**
  * Сущность Совет
  *
  * Class SovetEntity
  * @package Uzh\Snowpro\Entity
  */
-class SovetEntity
+class SovetEntity extends AbstractEntity
 {
     /** @var int */
     public $idSovet;

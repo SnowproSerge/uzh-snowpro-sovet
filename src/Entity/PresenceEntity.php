@@ -6,20 +6,23 @@
 
 namespace Uzh\Snowpro\Entity;
 
+use Uzh\Snowpro\Core\Data\AbstractEntity;
+use Uzh\Snowpro\Repository\MemberRepository;
+
 /**
  * Сущность присутствие на собрании
  *
  * Class PresenceEntity
  * @package Uzh\Snowpro\Entity
  */
-class PresenceEntity
+class PresenceEntity extends AbstractEntity
 {
     /** @var int */
     public $idPresence;
-    /** @var int */
-    public $idMeeting;
-    /** @var int */
-    public $idMember;
-    /** @var int */
-    public $idInstr;
+    /** @var MeetingEntity */
+    public $meeting;
+    /** @var MemberEntity */
+    public $member;
+    /** @var InstructorEntity */
+    public $instr;
 }
