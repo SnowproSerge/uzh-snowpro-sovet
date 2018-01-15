@@ -7,7 +7,7 @@
 namespace Uzh\Snowpro\Core;
 
 
-use Monolog\Handler\ChromePHPHandler;
+//use Monolog\Handler\ChromePHPHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Uzh\Snowpro\Core\Config\Config;
@@ -102,14 +102,17 @@ class App
     }
 
     /**
-     * @return mixed
+     * @return Templater\Templater
      */
     public function getTemplater()
     {
         return $this->templater;
     }
 
-    public static function template()
+    /**
+     * @return Templater\Templater
+     */
+    public static function template(): Templater\Templater
     {
         return self::$instance->getTemplater();
     }
@@ -134,4 +137,5 @@ class App
     {
         return self::$instance->getLogger();
     }
+
 }
