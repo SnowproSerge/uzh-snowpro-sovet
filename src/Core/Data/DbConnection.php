@@ -19,19 +19,22 @@ use Uzh\Snowpro\Core\Config\Config;
 
 class DbConnection
 {
-    const F_ONE = "fetchColumn";
-    const F_ONE_ROW = "fetch";
-    const F_ALL = "fetchAll";
-    const EXEC = "fetch";
+    const F_ONE = 'fetchColumn';
+    const F_ONE_ROW = 'fetch';
+    const F_ALL = 'fetchAll';
+    const EXEC = 'fetch';
 
     private $_Pdo;
 
-
-    public function __construct()
+    /**
+     * DbConnection constructor.
+     * @param $config Config
+     */
+    public function __construct($config)
     {
-        $dsn = Config::getConf()->SQL_DRIVER . ":dbname=" . Config::getConf()->SQL_SCHEMA . ";host=" . Config::getConf()->SQL_HOST . ";port=" . Config::getConf()->SQL_POST.";charset=utf8";
+        $dsn = $config->SQL_DRIVER . ':dbname=' . $config->SQL_SCHEMA . ';host=' . $config->SQL_HOST . ';port=' . $config->SQL_POST. ';charset=utf8';
         try {
-            $this->_Pdo = new \PDO($dsn, Config::getConf()->SQL_USER, Config::getConf()->SQL_PASS, [\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT]);
+            $this->_Pdo = new \PDO($dsn, $config->SQL_USER, $config->SQL_PASS, [\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT]);
         } catch (\PDOException $e) {
             echo 'Подключение не удалось: ' . $e->getMessage();
         }
@@ -111,18 +114,18 @@ class DbConnection
          if(!is_array($param) && !count($param)) return null;
          $i =true;
         $vals = array_keys($param);
-        $names = $value = "";
+        $names = $value = '';
          foreach ($vals as $val) {
              if($i) {
                  $i = false;
-                 $names = " ".$val;
-                 $value = " :".$val;
+                 $names = ' ' .$val;
+                 $value = ' :' .$val;
              } else {
-                 $names .= ", ".$val;
-                 $value .= ", :".$val."";
+                 $names .= ', ' .$val;
+                 $value .= ', :' .$val. '';
              }
          }
-         $query = "INSERT INTO ".$tablename." (".$names.") VALUES (".$value.")";
+         $query = 'INSERT INTO ' .$tablename. ' (' .$names. ') VALUES (' .$value. ')';
          $sth = $this->_execute($query, $param);
   //      $this->_Pdo->exec("COMMIT;");
         return $this->_Pdo->lastInsertId();

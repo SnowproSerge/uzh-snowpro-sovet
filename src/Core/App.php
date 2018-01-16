@@ -42,6 +42,7 @@ class App
 
     /** Инициализация приложения
      * @param string $config относительный путь файла конфигурации
+     * @throws \Exception
      */
     public static function initApp($config)
     {
@@ -69,6 +70,11 @@ class App
         }
     }
 
+    /**
+     * App constructor.
+     * @param $config
+     * @throws \Exception
+     */
     protected function __construct($config)
     {
         $this->config = new Config($config);
@@ -76,7 +82,7 @@ class App
         $this->logger = new Logger('main');
 //        $this->logger->pushHandler(new ChromePHPHandler($this->config->logger['path'], $this->config->logger['level']));
         $this->logger->pushHandler(new StreamHandler($this->config->logger['path'], $this->config->logger['level']));
-        $this->dbConnect = new DbConnection();
+        $this->dbConnect = new DbConnection($this->config);
 
     }
 
@@ -84,7 +90,7 @@ class App
     /**
      * @return RequestWeb
      */
-    public static function request()
+    public static function request(): RequestWeb
     {
         return self::$instance->request;
     }
@@ -92,7 +98,7 @@ class App
     /**
      * @return Config
      */
-    public static function getConf()
+    public static function getConf(): Config
     {
         return self::$instance->config;
     }
@@ -108,7 +114,7 @@ class App
     /**
      * @return Templater\Templater
      */
-    public function getTemplater()
+    public function getTemplater(): Templater\Templater
     {
         return $this->templater;
     }
