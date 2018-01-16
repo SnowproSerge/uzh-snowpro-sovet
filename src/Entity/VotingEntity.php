@@ -25,8 +25,13 @@ class VotingEntity extends AbstractEntity
     /** @var int */
     public $vote;
 
-    public function isNew()
+    public function getId(): int
     {
-        return empty($this->idVoting);
+        return $this->idVoting;
+    }
+
+    public function setId($id): void
+    {
+        $this->idVoting = $id;
     }
 }

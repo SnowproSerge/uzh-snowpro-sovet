@@ -28,8 +28,13 @@ class InstructorEntity extends AbstractEntity
     /** @var string */
     public $userhash;
 
-    public function isNew()
+    public function getId(): int
     {
-        return empty($this->idInstructor);
+        return $this->idInstructor;
+    }
+
+    public function setId($id): void
+    {
+        $this->idInstructor = $id;
     }
 }

@@ -29,8 +29,13 @@ class MemberEntity extends AbstractEntity
     /** @var string */
     public $programm;
 
-    public function isNew()
+    public function getId(): int
     {
-        return empty($this->idMember);
+        return $this->idMember;
+    }
+
+    public function setId($id): void
+    {
+        $this->idMember = $id;
     }
 }

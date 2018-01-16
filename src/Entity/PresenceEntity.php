@@ -25,8 +25,13 @@ class PresenceEntity extends AbstractEntity
     /** @var InstructorEntity */
     public $instr;
 
-    public function isNew()
+    public function getId(): int
     {
-        return empty($this->idPresence);
+        return $this->idPresence;
+    }
+
+    public function setId($id): void
+    {
+        $this->idPresence = $id;
     }
 }

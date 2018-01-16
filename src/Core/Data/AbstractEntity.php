@@ -9,5 +9,17 @@ namespace Uzh\Snowpro\Core\Data;
 
 abstract class AbstractEntity
 {
-    abstract public function isNew();
+    /**
+     * Возвращает признак новой сущности
+     *
+     * @return bool
+     */
+    public function isNew():bool
+    {
+        return empty($this->getId());
+    }
+
+
+    abstract public function setId($id): void;
+    abstract public function getId();
 }

@@ -27,8 +27,13 @@ class SovetEntity extends AbstractEntity
     /** @var string */
     public $digest;
 
-    public function isNew()
+    public function getId(): int
     {
-        return empty($this->idSovet);
+        return $this->idSovet;
+    }
+
+    public function setId($id): void
+    {
+        $this->idSovet = $id;
     }
 }

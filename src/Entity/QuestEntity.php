@@ -34,8 +34,13 @@ public $idPresence;
     /** @var int :todo make Entity */
     public $idTema;
 
-    public function isNew()
+    public function getId(): int
     {
-        return empty($this->idQuest);
+        return $this->idQuest;
+    }
+
+    public function setId($id): void
+    {
+        $this->idQuest = $id;
     }
 }

@@ -26,8 +26,13 @@ class MeetingEntity extends AbstractEntity
     /** @var string */
     public $title;
 
-    public function isNew()
+    public function getId():int
     {
-        return empty($this->idMeeting);
+        return $this->idMeeting;
+    }
+
+    public function setId($id): void
+    {
+        $this->idMeeting = $id;
     }
 }
