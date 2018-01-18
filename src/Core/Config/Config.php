@@ -28,6 +28,7 @@ use \Uzh\Snowpro\Core\Exception\BaseException;
  * @property array router_table
  * @property array main_menu
  * @property array logger
+ * @property array db_config
  */
 class Config
 {

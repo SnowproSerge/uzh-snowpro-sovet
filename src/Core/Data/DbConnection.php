@@ -15,7 +15,6 @@ namespace Uzh\Snowpro\Core\Data;
  * @package Uzh\Snowpro\Db
  */
 
-use Uzh\Snowpro\Core\Config\Config;
 
 class DbConnection
 {
@@ -26,27 +25,31 @@ class DbConnection
 
     private $_Pdo;
 
+
     /**
      * DbConnection constructor.
-     * @param $config Config
+     * @param $config array
      */
     public function __construct($config)
     {
-        $dsn = $config->SQL_DRIVER . ':dbname=' . $config->SQL_SCHEMA . ';host=' . $config->SQL_HOST . ';port=' . $config->SQL_POST. ';charset=utf8';
+
+        $dsn = $config['SQL_DRIVER'] . ':dbname=' . $config['SQL_SCHEMA'] . ';host=' . $config['SQL_HOST'] . ';port=' . $config['SQL_POST']. ';charset=utf8';
         try {
-            $this->_Pdo = new \PDO($dsn, $config->SQL_USER, $config->SQL_PASS, [\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT]);
+            $this->_Pdo = new \PDO($dsn, $config['SQL_USER'], $config['SQL_PASS'], [\PDO::ATTR_ERRMODE, \PDO::ERRMODE_SILENT]);
         } catch (\PDOException $e) {
             echo 'Подключение не удалось: ' . $e->getMessage();
+            echo $e->getTraceAsString();
+            var_dump($config);
         }
     }
 
-    protected function _execute($query, $param)
+    protected function _execute($query,array $param): \PDOStatement
     {
         $sth = $this->_Pdo->prepare($query);
         foreach ($param as $key => &$val) {
             $sth->bindParam($key, $val);
         }
-
+        unset($val);
         @$sth->execute();
         return $sth;
     }
@@ -66,7 +69,7 @@ class DbConnection
      * @param array $param
      * @return mixed
      */
-    public function selectAll($query, $param=[])
+    public function selectAll($query, array $param = [])
     {
         return $this->_select($query,$param,self::F_ALL);
     }
@@ -78,7 +81,7 @@ class DbConnection
      * @param array $param
      * @return mixed
      */
-    public function selectOneRow($query, $param=[])
+    public function selectOneRow($query, array $param = [])
     {
         return $this->_select($query,$param,self::F_ONE_ROW);
     }
@@ -88,7 +91,7 @@ class DbConnection
      * @param array $param
      * @return mixed
      */
-    public function selectOne($query, $param=[])
+    public function selectOne($query, array $param = [])
     {
         return $this->_select($query,$param,self::F_ONE);
     }
@@ -98,20 +101,22 @@ class DbConnection
      * @param $param
      * @return mixed
      */
-    public function execute($query, $param)
+    public function execute($query,array $param)
     {
         return $this->_select($query,$param,self::EXEC);
     }
 
     /**
      *   Добавляет в таблицу запись
-     * @param $tablename string - Имя таблицы
+     * @param $tableName string - Имя таблицы
      * @param $param array - ассоциативный массив с индексами соответствующими именам полей
      * @return null|string
      */
-    public function insert($tablename, $param)
+    public function insert($tableName, array $param)
     {
-         if(!is_array($param) && !count($param)) return null;
+         if(!\is_array($param) && !\count($param)) {
+             return null;
+         }
          $i =true;
         $vals = array_keys($param);
         $names = $value = '';
@@ -125,9 +130,8 @@ class DbConnection
                  $value .= ', :' .$val. '';
              }
          }
-         $query = 'INSERT INTO ' .$tablename. ' (' .$names. ') VALUES (' .$value. ')';
-         $sth = $this->_execute($query, $param);
-  //      $this->_Pdo->exec("COMMIT;");
+         $query = 'INSERT INTO ' .$tableName. ' (' .$names. ') VALUES (' .$value. ')';
+         $this->_execute($query, $param);
         return $this->_Pdo->lastInsertId();
     }
 }

@@ -80,9 +80,8 @@ class App
         $this->config = new Config($config);
         $this->router = new Router($this->config->router_table);
         $this->logger = new Logger('main');
-//        $this->logger->pushHandler(new ChromePHPHandler($this->config->logger['path'], $this->config->logger['level']));
         $this->logger->pushHandler(new StreamHandler($this->config->logger['path'], $this->config->logger['level']));
-        $this->dbConnect = new DbConnection($this->config);
+        $this->dbConnect = new DbConnection($this->config->db_config);
 
     }
 
@@ -143,7 +142,7 @@ class App
         return $this->logger;
     }
 
-    public static function logger()
+    public static function logger(): Logger
     {
         return self::$instance->getLogger();
     }

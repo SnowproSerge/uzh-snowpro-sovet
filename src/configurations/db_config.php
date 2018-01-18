@@ -5,9 +5,10 @@
  */
 
 return [
-    "SQL_HOST" => "localhost",
-    "SQL_PORT" => "3306",
-    "SQL_SCHEMA" => "sovet",
-    "SQL_USER" => "sovet",
-    "SQL_PASS" => "pass"
+    'SQL_DRIVER' => 'mysql',
+    'SQL_HOST' => '127.0.0.1',
+    'SQL_PORT' => '3306',
+    'SQL_SCHEMA' => 'sovet',
+    'SQL_USER' => 'sovet',
+    'SQL_PASS' => 'pass'
 ];

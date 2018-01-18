@@ -1,65 +1,39 @@
 version: "3"
 
 services:
-  nginx:
-    image: nginx
-    volumes:
-      - ./docker/nginx/:/etc/nginx/conf.d/
-    networks:
-      - front
-      - backend
-    ports:
-      - 8080:80
-
-  apache:
-    build: ./docker/apache
-    volumes:
-      - ./:/var/www/
-      - ./docker/apache/php.ini:/usr/local/etc/php.ini
-    networks:
-      - backend
-
-#  composer:
-#    restart: 'no'
-#    image: composer/composer:php5
-#    command: install
+#  nginx:
+#    image: nginx
 #    volumes:
-#      - ./:/var/www/
-
+#      - ./docker/nginx/:/etc/nginx/conf.d/
+#    networks:
+#      - front
+#      - backend
+#    ports:
+#      - 8080:80
 #  phpunit:
 #    image: "phpunit/phpunit"
 #    volumes:
 #      - ./:/var/www/
 
-  db:
+  mysql:
     image: "mysql:5.7"
     volumes:
       - ./docker/db:/var/lib/mysql/
+#      - ./run/mysqld/:/var/run/mysqld/
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: sovet
       MYSQL_USER: sovet
       MYSQL_PASSWORD: pass
-    networks:
-      - backend
-      - front
     ports:
       - 3306:3306
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    environment:
-      - PMA_HOST=db
-      - PMA_USER=sovet
-      - PMA_PASSWORD=pass
+  apache:
+    build: ./docker/apache
     volumes:
-      - /sessions
-    networks:
-      - backend
-
-
-networks:
-    front:
-        external:
-            name: front
-    backend:
+      - ./:/var/www/
+#      - ./run/:/var/run/
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
