@@ -63,6 +63,7 @@ class App
             $this->templater = TwigTemplater::init($this->config->base_dir . 'templates', $this->config->base_dir . '/cache');
             $this->auth->init();
             $controller->setAuth($this->auth);
+            $controller->setDbConnection($this->dbConnect);
             $controller->actionProcess($action, $params);
         } catch (\Exception $e) {
             $this->errorHandler->handleException($e);

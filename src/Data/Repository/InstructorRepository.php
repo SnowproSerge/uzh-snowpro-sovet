@@ -4,10 +4,11 @@
  * Date: 14.01.2018 21:44
  */
 
-namespace Uzh\Snowpro\Repository;
+namespace Uzh\Snowpro\Data\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\AbstractRepository;
+use Uzh\Snowpro\Data\Dto\InstructorDto;
 
 
 /**
@@ -18,25 +19,23 @@ use Uzh\Snowpro\Core\Data\AbstractRepository;
  */
 class InstructorRepository extends AbstractRepository
 {
-    /** @var int */
-    public $idInstr;
-    /** @var string */
-    public $fum;
-    /** @var string */
-    public $name;
-    /** @var string */
-    public $nic;
-    /** @var string */
-    public $userhash;
-
-    public function getEntity(): AbstractEntity
+    /**
+     * @param $id
+     * @return AbstractEntity
+     */
+    public function getEntity($id): AbstractEntity
     {
-        // TODO: Implement getEntity() method.
+        $arr = $this->dbConnection->select(
+            'SELECT * FROM instr WHERE id_instr = :id',
+                array(':id' => $id),
+                $this->getClassDto());
+        return $arr[0] ?? null;
     }
 
-    public function getEntityORM(): AbstractEntity
+    public function getListEntities(): array
     {
-        // TODO: Implement getEntityORM() method.
+        return $this->dbConnection->select(
+            'SELECT * FROM instr', [], $this->getClassDto());
     }
 
     public function save($entity): void
@@ -57,5 +56,10 @@ class InstructorRepository extends AbstractRepository
     public function insert($entity): void
     {
         // TODO: Implement insert() method.
+    }
+
+    public function getClassDto(): string
+    {
+        return InstructorDto::class;
     }
 }

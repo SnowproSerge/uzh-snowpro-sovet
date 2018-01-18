@@ -6,7 +6,7 @@
 
 return [
     'SQL_DRIVER' => 'mysql',
-    'SQL_HOST' => '127.0.0.1',
+    'SQL_HOST' => 'db_mysql',
     'SQL_PORT' => '3306',
     'SQL_SCHEMA' => 'sovet',
     'SQL_USER' => 'sovet',

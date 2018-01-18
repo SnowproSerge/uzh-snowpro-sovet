@@ -7,6 +7,7 @@
 namespace Uzh\Snowpro\Core;
 
 use PHPUnit\Runner\Exception;
+use Uzh\Snowpro\Core\Data\DbConnection;
 use Uzh\Snowpro\Core\Exception\RoutingException;
 use Uzh\Snowpro\Core\Security\Auth;
 use Uzh\Snowpro\Core\Security\Role;
@@ -32,6 +33,9 @@ abstract class AbstractController
     protected $actionRoles;
     /** @var Auth */
     protected $auth;
+
+    /** @var DbConnection */
+    protected $dbConnection;
 
     /**
      * AbstractController constructor.
@@ -90,6 +94,14 @@ abstract class AbstractController
     public function setAuth(Auth $auth): void
     {
         $this->auth = $auth;
+    }
+
+    /**
+     * @param DbConnection $dbConnection
+     */
+    public function setDbConnection(DbConnection $dbConnection): void
+    {
+        $this->dbConnection = $dbConnection;
     }
 
 }

@@ -7,6 +7,7 @@
  */
 
 namespace Uzh\Snowpro\Core\Data;
+use PDO;
 
 /**
  * todo: отделить получение данных из конфига (в конструктор) от инициализации соъединения ( в отдельный метод)
@@ -133,5 +134,13 @@ class DbConnection
          $query = 'INSERT INTO ' .$tableName. ' (' .$names. ') VALUES (' .$value. ')';
          $this->_execute($query, $param);
         return $this->_Pdo->lastInsertId();
+    }
+
+    public function select($query,array $param, $class): array
+    {
+        $sth = $this->_execute($query, $param);
+        $ret = $sth->fetchAll(PDO::FETCH_CLASS, $class);
+        $sth->closeCursor();
+        return $ret;
     }
 }

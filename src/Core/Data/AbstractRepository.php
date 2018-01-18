@@ -13,8 +13,17 @@ abstract class AbstractRepository
     /** @var DbConnection */
     protected $dbConnection;
 
-    abstract public function getEntity(): AbstractEntity;
-    abstract public function getEntityORM(): AbstractEntity;
+    /**
+     * AbstractRepository constructor.
+     * @param DbConnection $dbConnection
+     */
+    public function __construct(DbConnection $dbConnection)
+    {
+        $this->dbConnection = $dbConnection;
+    }
+
+    abstract public function getClassDto(): string;
+    abstract public function getEntity($id): AbstractEntity;
     abstract public function save($entity): void;
     abstract public function update($entity): void;
     abstract public function delete($entity): void;

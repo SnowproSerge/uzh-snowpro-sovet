@@ -9,6 +9,7 @@ namespace Uzh\Snowpro\Controller;
 
 use Uzh\Snowpro\Core\AbstractController;
 use Uzh\Snowpro\Core\App;
+use Uzh\Snowpro\Data\Repository\InstructorRepository;
 
 class MainController extends AbstractController
 {
@@ -24,6 +25,8 @@ class MainController extends AbstractController
 
     public function indexAction()
     {
+        $instr = new InstructorRepository($this->dbConnection);
+        $this->viewParams['text'] = print_r($instr->getListEntities(),true);
         App::logger()->addInfo('Action info');
         return "test.twig";
     }
