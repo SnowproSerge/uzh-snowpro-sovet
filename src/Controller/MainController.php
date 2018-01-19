@@ -17,7 +17,7 @@ class MainController extends AbstractController
     /**
      * Заполнение таблицы доступа
      */
-    protected function setRestrictions()
+    protected function setRestrictions(): void
     {
         // TODO: Implement setRestrictions() method.
         $this->actionRoles = [];
@@ -26,7 +26,7 @@ class MainController extends AbstractController
     public function indexAction()
     {
         $instr = new InstructorRepository($this->dbConnection);
-        $this->viewParams['text'] = print_r($instr->getListEntities(),true);
+        $this->viewParams['text'] = print_r($instr->getAllEntities(),true);
         App::logger()->addInfo('Action info');
         return "test.twig";
     }

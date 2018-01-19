@@ -6,8 +6,8 @@
 
 namespace Uzh\Snowpro\Repository;
 
-use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\AbstractRepository;
+use Uzh\Snowpro\Data\Dto\VotingDto;
 
 /**
  * Сущность голосование
@@ -17,42 +17,27 @@ use Uzh\Snowpro\Core\Data\AbstractRepository;
  */
 class VotingRepository extends AbstractRepository
 {
-    /** @var int */
-    public $idVoting;
-    /** @var int */
-    public $idQuest;
-    /** @var int */
-    public $idMember;
-    /** @var int */
-    public $vote;
-
-    public function getEntity(): AbstractEntity
+    /**
+     * @return string
+     */
+    public function getClassDto(): string
     {
-        // TODO: Implement getEntity() method.
+        return VotingDto::class;
     }
 
-    public function getEntityORM(): AbstractEntity
+    /**
+     * @return string
+     */
+    public function getTableName(): string
     {
-        // TODO: Implement getEntityORM() method.
+        return 'voting';
     }
 
-    public function save($entity): void
+    /**
+     * @return string
+     */
+    public function getPrimaryKey(): string
     {
-        // TODO: Implement save() method.
-    }
-
-    public function update($entity): void
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete($entity): void
-    {
-        // TODO: Implement delete() method.
-    }
-
-    public function insert($entity): void
-    {
-        // TODO: Implement insert() method.
+        return 'id_voting';
     }
 }

@@ -4,7 +4,7 @@
  * Date: 14.01.2018 21:50
  */
 
-namespace Uzh\Snowpro\Entity;
+namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
 

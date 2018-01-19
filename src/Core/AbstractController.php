@@ -49,21 +49,24 @@ abstract class AbstractController
     /**
      * Заполнение таблицы доступа
      */
-    protected abstract function setRestrictions();
+    abstract protected function setRestrictions(): void;
+
     /**
      *
      * Метод получает имя action, запускает его и поле вызывает полученный шаблон с полученными параметрвами
      *
      * @param $action
      * @param $pathParams
+     * @throws \PHPUnit\Runner\Exception
      * @throws RoutingException
      */
     public function actionProcess($action, $pathParams): void
     {
         $actionName = $action . 'Action';
         if (method_exists($this, $actionName)) {
-            if(!$this->isAuthAction($action))
+            if(!$this->isAuthAction($action)) {
                 throw new Exception('Недостаточно прав для использования! Обратитесь к администратору.');
+            }
             $this->pathParams = $pathParams;
             $viewName = $this->$actionName();
             $view = new View($viewName);
@@ -80,11 +83,14 @@ abstract class AbstractController
      */
     public function isAuthAction($action): bool
     {
-        if (in_array($action, $this->actionRoles))
+        if (\in_array($action, $this->actionRoles, true)) {
             return true;
-        if ($this->auth->getRole()->getRole() == Role::ADMIN)
+        }
+        $role = $this->auth->getRole()->getRole();
+        if ( $role === Role::ADMIN) {
             return true;
-        return (in_array($this->auth->getRole()->getRole(),$this->actionRoles[$action]));
+        }
+        return \in_array($role, $this->actionRoles[$action], true);
 
     }
 

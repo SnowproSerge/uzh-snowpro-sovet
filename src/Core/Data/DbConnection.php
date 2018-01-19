@@ -19,10 +19,10 @@ use PDO;
 
 class DbConnection
 {
-    const F_ONE = 'fetchColumn';
-    const F_ONE_ROW = 'fetch';
-    const F_ALL = 'fetchAll';
-    const EXEC = 'fetch';
+    public const F_ONE = 'fetchColumn';
+    public const F_ONE_ROW = 'fetch';
+    public const F_ALL = 'fetchAll';
+    public const EXEC = 'fetch';
 
     private $_Pdo;
 
@@ -113,7 +113,7 @@ class DbConnection
      * @param $param array - ассоциативный массив с индексами соответствующими именам полей
      * @return null|string
      */
-    public function insert($tableName, array $param)
+    public function insert($tableName, array $param): ?string
     {
          if(!\is_array($param) && !\count($param)) {
              return null;

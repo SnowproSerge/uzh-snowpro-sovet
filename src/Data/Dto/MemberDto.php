@@ -1,33 +1,37 @@
 <?php
 /**
- * @author Sergey Naryshkin
- * Date: 19.01.2018 0:08
+ * @author: Sergey Naryshkin
+ * @date: 19.01.2018
  */
 
 namespace Uzh\Snowpro\Data\Dto;
 
+
 use Uzh\Snowpro\Core\Data\DtoInterface;
 
-class InstructorDto implements DtoInterface
+class MemberDto implements DtoInterface
 {
+    /** @var int */
+    public $id_member;
+    /** @var int */
+    public $id_sovet;
     /** @var int */
     public $id_instr;
     /** @var string */
-    public $fam;
+    public $fname;
     /** @var string */
-    public $name;
+    public $lname;
     /** @var string */
-    public $nic;
-    /** @var string */
-    public $userhash;
+    public $programm;
+
 
     public function getId(): int
     {
-        return $this->id_instr;
+        return $this->id_member;
     }
 
     public function setId(int $id): void
     {
-        $this->id_instr = $id;
+        $this->id_member = $id;
     }
 }

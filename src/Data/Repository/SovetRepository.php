@@ -6,8 +6,8 @@
 
 namespace Uzh\Snowpro\Repository;
 
-use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\AbstractRepository;
+use Uzh\Snowpro\Data\Dto\SovetDto;
 
 /**
  * Сущность Совет
@@ -17,44 +17,27 @@ use Uzh\Snowpro\Core\Data\AbstractRepository;
  */
 class SovetRepository extends AbstractRepository
 {
-    /** @var int */
-    public $idSovet;
-    /** @var int */
-    public $dateSt;
-    /** @var int */
-    public $dateEn;
-    /** @var string */
-    public $title;
-    /** @var string */
-    public $digest;
-
-    public function getEntity(): AbstractEntity
+    /**
+     * @return string
+     */
+    public function getClassDto(): string
     {
-        // TODO: Implement getEntity() method.
+        return SovetDto::class;
     }
 
-    public function getEntityORM(): AbstractEntity
+    /**
+     * @return string
+     */
+    public function getTableName(): string
     {
-        // TODO: Implement getEntityORM() method.
+        return 'sovet';
     }
 
-    public function save($entity): void
+    /**
+     * @return string
+     */
+    public function getPrimaryKey(): string
     {
-        // TODO: Implement save() method.
-    }
-
-    public function update($entity): void
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete($entity): void
-    {
-        // TODO: Implement delete() method.
-    }
-
-    public function insert($entity): void
-    {
-        // TODO: Implement insert() method.
+        return 'id_sovet';
     }
 }

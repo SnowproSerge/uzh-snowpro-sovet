@@ -7,6 +7,7 @@
 namespace Uzh\Snowpro\Core\Data;
 
 
+
 abstract class AbstractRepository
 {
 
@@ -22,10 +23,97 @@ abstract class AbstractRepository
         $this->dbConnection = $dbConnection;
     }
 
+    /**
+     * @return string
+     */
     abstract public function getClassDto(): string;
-    abstract public function getEntity($id): AbstractEntity;
-    abstract public function save($entity): void;
-    abstract public function update($entity): void;
-    abstract public function delete($entity): void;
-    abstract public function insert($entity): void;
+
+    /**
+     * @return string
+     */
+    abstract public function getTableName(): string;
+
+    /**
+     * @return string
+     */
+    abstract public function getPrimaryKey(): string;
+
+    /**
+     * @param $id
+     * @return DtoInterface
+     */
+    public function getEntity($id): DtoInterface
+    {
+        $arr = $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName().' WHERE '.$this->getPrimaryKey().' = :id',
+            [':id' => $id],
+            $this->getClassDto());
+        return $arr[0] ?? null;
+    }
+
+    /**
+     * @return DtoInterface[]
+     */
+    public function getAllEntities(): array
+    {
+        return $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName(), [], $this->getClassDto());
+    }
+
+    /**
+     * @param DtoInterface $dto
+     */
+    public function save(DtoInterface $dto): void
+    {
+        if(empty($dto->getId())) {
+            $this->insert($dto);
+        } else {
+            $this->update($dto);
+        }
+    }
+
+    /**
+     * @param DtoInterface $dto
+     *
+     * NOTE: Ограничение работы метода - в таблице не должно быть полей с именем 'id', если это поле не primary key
+     */
+    public function update(DtoInterface $dto): void
+    {
+        $data = (array) $dto;
+        $params = [];
+        $set = [];
+        foreach ($data as $key => $par) {
+            if($key === $this->getPrimaryKey()) {
+                continue;
+            }
+            $set[] = $key . '= :'.$key;
+            $params[':'.$key] = $par;
+        }
+        $params[':id'] = $dto->getId();
+        if(!\count($set)) {
+            return;
+        }
+        $sql = 'UPDATE '.$this->getTableName().' SET '.implode(' ,',$set).' WHERE '.$this->getPrimaryKey().' = :id';
+        $this->dbConnection->execute($sql,$params);
+    }
+
+    /**
+     * @param DtoInterface $dto
+     */
+    public function delete(DtoInterface $dto): void
+    {
+        $this->dbConnection->execute('DELETE FROM '.$this->getTableName().' WHERE '.$this->getPrimaryKey().'= :id',
+            [':id' => $dto->getId()]);
+    }
+
+    /**
+     * @param DtoInterface $dto
+     * @return DtoInterface
+     */
+    public function insert(DtoInterface $dto): DtoInterface
+    {
+        $lastId = $this->dbConnection->insert($this->getTableName(),(array) $dto);
+        $dto->setId($lastId);
+        return $dto;
+    }
 }

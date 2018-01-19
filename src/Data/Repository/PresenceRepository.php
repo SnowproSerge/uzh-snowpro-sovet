@@ -6,8 +6,8 @@
 
 namespace Uzh\Snowpro\Repository;
 
-use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\AbstractRepository;
+use Uzh\Snowpro\Data\Dto\PresenceDto;
 
 /**
  * Сущность присутствие на собрании
@@ -17,42 +17,27 @@ use Uzh\Snowpro\Core\Data\AbstractRepository;
  */
 class PresenceRepository extends AbstractRepository
 {
-    /** @var int */
-    public $idPresence;
-    /** @var int */
-    public $idMeeting;
-    /** @var int */
-    public $idMember;
-    /** @var int */
-    public $idInstr;
-
-    public function getEntity(): AbstractEntity
+    /**
+     * @return string
+     */
+    public function getClassDto(): string
     {
-        // TODO: Implement getEntity() method.
+        return PresenceDto::class;
     }
 
-    public function getEntityORM(): AbstractEntity
+    /**
+     * @return string
+     */
+    public function getTableName(): string
     {
-        // TODO: Implement getEntityORM() method.
+        return 'presence';
     }
 
-    public function save($entity): void
+    /**
+     * @return string
+     */
+    public function getPrimaryKey(): string
     {
-        // TODO: Implement save() method.
-    }
-
-    public function update($entity): void
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete($entity): void
-    {
-        // TODO: Implement delete() method.
-    }
-
-    public function insert($entity): void
-    {
-        // TODO: Implement insert() method.
+        return 'id_presence';
     }
 }
