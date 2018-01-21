@@ -57,7 +57,7 @@ class RepositoryManager
             try {
                 $this->buffer[$class] = new $class($this->connect);
             } catch (\Exception $e) {
-
+                $this->logger->addError('Unable create class '.$class .' : '.$e->getMessage() . $e->getTraceAsString());
             }
         }
         return $this->buffer[$class];

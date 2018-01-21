@@ -9,8 +9,8 @@ namespace Uzh\Snowpro\Data\Entity;
 use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Data\Dto\VotingDto;
-use Uzh\Snowpro\Repository\MeetingRepository;
-use Uzh\Snowpro\Repository\QuestRepository;
+use Uzh\Snowpro\Data\Repository\MeetingRepository;
+use Uzh\Snowpro\Data\Repository\QuestRepository;
 
 /**
  * Сущность голосование

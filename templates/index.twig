@@ -1,4 +1,9 @@
 {% extends "layouts/main.twig" %}
 {% import "macros/question.twig" as question %}
-<h1>Последний вопрос</h1>
-{{ question(lastQuestion) }}
+{% block content %}
+<h1>Последний совет</h1>
+ {{ sovet.title }}
+{% for quest in sovet.questions  %}
+    {{ question.question(quest) }}
+{% endfor %}
+{% endblock %}

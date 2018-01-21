@@ -10,6 +10,8 @@ use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Data\Dto\PresenceDto;
 use Uzh\Snowpro\Data\Repository\InstructorRepository;
+use Uzh\Snowpro\Data\Repository\MeetingRepository;
+use Uzh\Snowpro\Data\Repository\MemberRepository;
 
 /**
  * Сущность присутствие на собрании
@@ -76,8 +78,8 @@ class PresenceEntity extends AbstractEntity
 
     public function setRelations()
     {
-        RepositoryManager::getRepository(MemberEntity::class)->fillEntity($this->member);
-        RepositoryManager::getRepository(MeetingEntity::class)->fillEntity($this->meeting);
+        RepositoryManager::getRepository(MemberRepository::class)->fillEntity($this->member);
+        RepositoryManager::getRepository(MeetingRepository::class)->fillEntity($this->meeting);
         RepositoryManager::getRepository(InstructorRepository::class)->fillEntity($this->instructor);
     }
 

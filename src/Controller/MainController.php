@@ -10,7 +10,7 @@ namespace Uzh\Snowpro\Controller;
 use Uzh\Snowpro\Core\AbstractController;
 use Uzh\Snowpro\Core\App;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
-use Uzh\Snowpro\Data\Repository\InstructorRepository;
+use Uzh\Snowpro\Data\Repository\SovetRepository;
 
 class MainController extends AbstractController
 {
@@ -26,9 +26,10 @@ class MainController extends AbstractController
 
     public function indexAction()
     {
-        $instr = RepositoryManager::getRepository(InstructorRepository::class);
-        $this->viewParams['text'] = print_r($instr->getAllEntities(),true);
-        App::logger()->addInfo('Action info');
+        /** @var SovetRepository $repoSovet */
+        $repoSovet = RepositoryManager::getRepository(SovetRepository::class);
+        $this->viewParams['sovet'] = $repoSovet->getLastSovet();
+        App::logger()->addInfo('Action index',(array) $this->viewParams['sovet']);
         return "index.twig";
     }
 

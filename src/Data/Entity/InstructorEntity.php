@@ -8,7 +8,6 @@ namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Data\Dto\InstructorDto;
-use Uzh\Snowpro\Data\Repository\InstructorRepository;
 
 
 /**

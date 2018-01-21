@@ -9,8 +9,8 @@ namespace Uzh\Snowpro\Data\Entity;
 use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Data\Dto\QuestDto;
-use Uzh\Snowpro\Repository\MeetingRepository;
-use Uzh\Snowpro\Repository\VotingRepository;
+use Uzh\Snowpro\Data\Repository\MeetingRepository;
+use Uzh\Snowpro\DAta\Repository\VotingRepository;
 
 /**
  * Сущность вопрос

@@ -9,7 +9,7 @@ namespace Uzh\Snowpro\Data\Entity;
 use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Data\Dto\MeetingDto;
-use Uzh\Snowpro\Repository\SovetRepository;
+use Uzh\Snowpro\Data\Repository\SovetRepository;
 
 
 /**
@@ -28,6 +28,8 @@ class MeetingEntity extends AbstractEntity
     public $datesov;
     /** @var string */
     public $title;
+    /** @var QuestEntity[] */
+    public $question;
 
     public function getId():int
     {
@@ -48,6 +50,9 @@ class MeetingEntity extends AbstractEntity
         $this->sovet = new SovetEntity($dto->id_sovet);
         $this->datesov = $dto->datesov;
         $this->title =$dto->title;
+
+        $this->question = [];
+        $this->setFill();
     }
 
     public function setRelations()

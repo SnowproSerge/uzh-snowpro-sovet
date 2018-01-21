@@ -4,7 +4,7 @@
  * Date: 14.01.2018 21:49
  */
 
-namespace Uzh\Snowpro\Repository;
+namespace Uzh\Snowpro\Data\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\PresenceDto;

@@ -4,7 +4,7 @@
  * Date: 14.01.2018 21:50
  */
 
-namespace Uzh\Snowpro\Repository;
+namespace Uzh\Snowpro\Data\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\SovetDto;
@@ -46,5 +46,23 @@ class SovetRepository extends AbstractRepository
     public function getClassEntity(): string
     {
         return SovetEntity::class;
+    }
+
+    /**
+     * @return null|SovetEntity
+     */
+    public function getLastSovet()
+    {
+        $arr = $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName().' ORDER BY '.$this->getPrimaryKey().' DESC LIMIT 1',
+            [],
+            $this->getClassDto());
+        if(!isset($arr[0])) {
+            return null;
+        }
+        $sovet = new SovetEntity();
+        $sovet->init($arr[0]);
+
+        return $sovet;
     }
 }

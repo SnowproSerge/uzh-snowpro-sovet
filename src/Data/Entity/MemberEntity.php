@@ -10,7 +10,7 @@ use Uzh\Snowpro\Core\Data\AbstractEntity;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Data\Dto\MemberDto;
 use Uzh\Snowpro\Data\Repository\InstructorRepository;
-use Uzh\Snowpro\Repository\SovetRepository;
+use Uzh\Snowpro\Data\Repository\SovetRepository;
 
 /**
  * Сущность член совета
