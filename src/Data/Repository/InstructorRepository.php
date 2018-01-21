@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Data\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\InstructorDto;
+use Uzh\Snowpro\Data\Entity\InstructorEntity;
 
 
 /**
@@ -32,5 +33,11 @@ class InstructorRepository extends AbstractRepository
     public function getPrimaryKey(): string
     {
         return 'id_instr';
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return InstructorEntity::class;
     }
 }

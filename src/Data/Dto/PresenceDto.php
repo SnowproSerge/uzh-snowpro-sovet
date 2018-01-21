@@ -7,9 +7,9 @@
 namespace Uzh\Snowpro\Data\Dto;
 
 
-use Uzh\Snowpro\Core\Data\DtoInterface;
+use Uzh\Snowpro\Core\Data\AbstractDto;
 
-class PresenceDto implements DtoInterface
+class PresenceDto extends AbstractDto
 {
     /** @var int */
     public $id_presence;

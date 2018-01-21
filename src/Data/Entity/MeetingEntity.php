@@ -7,6 +7,9 @@
 namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
+use Uzh\Snowpro\Core\Data\RepositoryManager;
+use Uzh\Snowpro\Data\Dto\MeetingDto;
+use Uzh\Snowpro\Repository\SovetRepository;
 
 
 /**
@@ -20,7 +23,7 @@ class MeetingEntity extends AbstractEntity
     /** @var int */
     public $idMeeting;
     /** @var SovetEntity */
-    public $Sovet;
+    public $sovet;
     /** @var int Unix timestamp */
     public $datesov;
     /** @var string */
@@ -34,5 +37,29 @@ class MeetingEntity extends AbstractEntity
     public function setId($id): void
     {
         $this->idMeeting = $id;
+    }
+
+    /**
+     * @param $dto MeetingDto
+     */
+    public function init($dto): void
+    {
+        $this->idMeeting = $dto->getId();
+        $this->sovet = new SovetEntity($dto->id_sovet);
+        $this->datesov = $dto->datesov;
+        $this->title =$dto->title;
+    }
+
+    public function setRelations()
+    {
+        RepositoryManager::getRepository(SovetRepository::class)->fillEntity($this->sovet);
+    }
+
+    /**
+     * @param SovetEntity $sovet
+     */
+    public function setSovet(SovetEntity $sovet): void
+    {
+        $this->sovet = $sovet;
     }
 }

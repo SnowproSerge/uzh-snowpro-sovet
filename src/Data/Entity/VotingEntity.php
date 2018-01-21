@@ -7,6 +7,10 @@
 namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
+use Uzh\Snowpro\Core\Data\RepositoryManager;
+use Uzh\Snowpro\Data\Dto\VotingDto;
+use Uzh\Snowpro\Repository\MeetingRepository;
+use Uzh\Snowpro\Repository\QuestRepository;
 
 /**
  * Сущность голосование
@@ -34,4 +38,32 @@ class VotingEntity extends AbstractEntity
     {
         $this->idVoting = $id;
     }
+
+    /**
+     * @param VotingDto $dto
+     */
+    public function init($dto): void
+    {
+        $this->idVoting = $dto->id_voting;
+        $this->quest = new QuestEntity($dto->id_quest);
+        $this->member = new MemberEntity($dto->id_member);
+        $this->vote = $dto->vote;
+        $this->setFill();
+    }
+
+    public function setRelations()
+    {
+        RepositoryManager::getRepository(QuestRepository::class)->fillEntity($this->quest);
+        RepositoryManager::getRepository(MeetingRepository::class)->fillEntity($this->member);
+    }
+
+    /**
+     * @param QuestEntity $quest
+     */
+    public function setQuest(QuestEntity $quest)
+    {
+        $this->quest = $quest;
+    }
+
+
 }

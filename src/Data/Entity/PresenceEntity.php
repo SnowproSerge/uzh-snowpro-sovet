@@ -7,6 +7,9 @@
 namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
+use Uzh\Snowpro\Core\Data\RepositoryManager;
+use Uzh\Snowpro\Data\Dto\PresenceDto;
+use Uzh\Snowpro\Data\Repository\InstructorRepository;
 
 /**
  * Сущность присутствие на собрании
@@ -20,10 +23,10 @@ class PresenceEntity extends AbstractEntity
     public $idPresence;
     /** @var MeetingEntity */
     public $meeting;
-    /** @var MemberEntity */
+    /** @var MemberEntity|null */
     public $member;
     /** @var InstructorEntity */
-    public $instr;
+    public $instructor;
 
     public function getId(): int
     {
@@ -34,4 +37,48 @@ class PresenceEntity extends AbstractEntity
     {
         $this->idPresence = $id;
     }
+
+    /**
+     * @param $dto PresenceDto
+     */
+    public function init($dto): void
+    {
+        $this->idPresence = $dto->getId();
+        $this->meeting = new MeetingEntity($dto->id_meeting);
+        $this->member = new MemberEntity($dto->id_member);
+        $this->instructor = new InstructorEntity($dto->id_instr);
+        $this->setFill();
+    }
+
+    /**
+     * @param MeetingEntity $meeting
+     */
+    public function setMeeting(MeetingEntity $meeting): void
+    {
+        $this->meeting = $meeting;
+    }
+
+    /**
+     * @param null|MemberEntity $member
+     */
+    public function setMember(?MemberEntity $member): void
+    {
+        $this->member = $member;
+    }
+
+    /**
+     * @param InstructorEntity $instructor
+     */
+    public function setInstructor(InstructorEntity $instructor): void
+    {
+        $this->instructor = $instructor;
+    }
+
+    public function setRelations()
+    {
+        RepositoryManager::getRepository(MemberEntity::class)->fillEntity($this->member);
+        RepositoryManager::getRepository(MeetingEntity::class)->fillEntity($this->meeting);
+        RepositoryManager::getRepository(InstructorRepository::class)->fillEntity($this->instructor);
+    }
+
 }

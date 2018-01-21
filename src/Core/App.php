@@ -7,11 +7,11 @@
 namespace Uzh\Snowpro\Core;
 
 
-//use Monolog\Handler\ChromePHPHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Uzh\Snowpro\Core\Config\Config;
 use Uzh\Snowpro\Core\Data\DbConnection;
+use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Core\Exception\RoutingException;
 use Uzh\Snowpro\Core\Security\Auth;
 use Uzh\Snowpro\Core\Templater\TwigTemplater;
@@ -61,6 +61,7 @@ class App
                 throw new RoutingException('Bad controller name: ' . print_r($controller, true));
             }
             $this->templater = TwigTemplater::init($this->config->base_dir . 'templates', $this->config->base_dir . '/cache');
+            RepositoryManager::init($this->dbConnect,$this->logger);
             $this->auth->init();
             $controller->setAuth($this->auth);
             $controller->setDbConnection($this->dbConnect);

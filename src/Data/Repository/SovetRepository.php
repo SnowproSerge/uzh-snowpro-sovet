@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\SovetDto;
+use Uzh\Snowpro\Data\Entity\SovetEntity;
 
 /**
  * Сущность Совет
@@ -39,5 +40,11 @@ class SovetRepository extends AbstractRepository
     public function getPrimaryKey(): string
     {
         return 'id_sovet';
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return SovetEntity::class;
     }
 }

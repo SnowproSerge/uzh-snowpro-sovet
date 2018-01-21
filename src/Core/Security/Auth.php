@@ -7,7 +7,7 @@
 namespace Uzh\Snowpro\Core\Security;
 
 
-use Uzh\Snowpro\Core\Exception\UnauthorizedException;
+
 
 /**
  * Получает авторизацию

@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\PresenceDto;
+use Uzh\Snowpro\Data\Entity\PresenceEntity;
 
 /**
  * Сущность присутствие на собрании
@@ -39,5 +40,11 @@ class PresenceRepository extends AbstractRepository
     public function getPrimaryKey(): string
     {
         return 'id_presence';
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return PresenceEntity::class;
     }
 }

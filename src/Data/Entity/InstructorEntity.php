@@ -7,6 +7,8 @@
 namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
+use Uzh\Snowpro\Data\Dto\InstructorDto;
+use Uzh\Snowpro\Data\Repository\InstructorRepository;
 
 
 /**
@@ -20,9 +22,9 @@ class InstructorEntity extends AbstractEntity
     /** @var int */
     public $idInstructor;
     /** @var string */
-    public $fum;
+    public $lastName;
     /** @var string */
-    public $name;
+    public $firstName;
     /** @var string */
     public $nic;
     /** @var string */
@@ -36,5 +38,18 @@ class InstructorEntity extends AbstractEntity
     public function setId($id): void
     {
         $this->idInstructor = $id;
+    }
+
+    /**
+     * @param $dto InstructorDto
+     */
+    public function init($dto): void
+    {
+        $this->idInstructor = $dto->getId();
+        $this->lastName = $dto->fam;
+        $this->firstName = $dto->name;
+        $this->nic = $dto->nic;
+        $this->userhash = $dto->userhash;
+        $this->setFill();
     }
 }

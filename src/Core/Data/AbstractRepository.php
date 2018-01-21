@@ -23,26 +23,23 @@ abstract class AbstractRepository
         $this->dbConnection = $dbConnection;
     }
 
-    /**
-     * @return string
-     */
+    /** @return string     */
     abstract public function getClassDto(): string;
 
-    /**
-     * @return string
-     */
+    /** @return string     */
+    abstract public function getClassEntity(): string;
+
+    /** @return string     */
     abstract public function getTableName(): string;
 
-    /**
-     * @return string
-     */
+    /** @return string     */
     abstract public function getPrimaryKey(): string;
 
     /**
      * @param $id
-     * @return DtoInterface
+     * @return AbstractDto
      */
-    public function getEntity($id): DtoInterface
+    public function getDto($id): AbstractDto
     {
         $arr = $this->dbConnection->select(
             'SELECT * FROM '.$this->getTableName().' WHERE '.$this->getPrimaryKey().' = :id',
@@ -52,7 +49,20 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return DtoInterface[]
+     * @param $id int
+     * @return AbstractEntity
+     */
+    public function getEntity($id): AbstractEntity
+    {
+       $class = $this->getClassEntity();
+       /** @var AbstractEntity $entity */
+       $entity = new $class($id);
+       $entity->init($this->getDto($id));
+        return $entity;
+    }
+
+    /**
+     * @return AbstractDto[]
      */
     public function getAllEntities(): array
     {
@@ -61,9 +71,9 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param DtoInterface $dto
+     * @param AbstractDto $dto
      */
-    public function save(DtoInterface $dto): void
+    public function save(AbstractDto $dto): void
     {
         if(empty($dto->getId())) {
             $this->insert($dto);
@@ -73,11 +83,11 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param DtoInterface $dto
+     * @param AbstractDto $dto
      *
      * NOTE: Ограничение работы метода - в таблице не должно быть полей с именем 'id', если это поле не primary key
      */
-    public function update(DtoInterface $dto): void
+    public function update(AbstractDto $dto): void
     {
         $data = (array) $dto;
         $params = [];
@@ -98,22 +108,35 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param DtoInterface $dto
+     * @param AbstractDto $dto
      */
-    public function delete(DtoInterface $dto): void
+    public function delete(AbstractDto $dto): void
     {
         $this->dbConnection->execute('DELETE FROM '.$this->getTableName().' WHERE '.$this->getPrimaryKey().'= :id',
             [':id' => $dto->getId()]);
     }
 
     /**
-     * @param DtoInterface $dto
-     * @return DtoInterface
+     * @param AbstractDto $dto
+     * @return AbstractDto
      */
-    public function insert(DtoInterface $dto): DtoInterface
+    public function insert(AbstractDto $dto): AbstractDto
     {
         $lastId = $this->dbConnection->insert($this->getTableName(),(array) $dto);
         $dto->setId($lastId);
         return $dto;
+    }
+
+    /**
+     * Заполняет entity, если еще не заполнено
+     *
+     * @param AbstractEntity $entity
+     */
+    public function fillEntity(AbstractEntity $entity): void
+    {
+        if(!$entity->isFill()) {
+            $dto = $this->getDto($entity->getId());
+            $entity->init($dto);
+        }
     }
 }

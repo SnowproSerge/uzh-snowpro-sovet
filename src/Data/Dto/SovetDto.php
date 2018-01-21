@@ -7,16 +7,16 @@
 namespace Uzh\Snowpro\Data\Dto;
 
 
-use Uzh\Snowpro\Core\Data\DtoInterface;
+use Uzh\Snowpro\Core\Data\AbstractDto;
 
-class SovetDto implements DtoInterface
+class SovetDto extends AbstractDto
 {
     /** @var int */
     public $id_sovet;
     /** @var int */
-    public $dateSt;
+    public $datest;
     /** @var int */
-    public $dateEn;
+    public $dateen;
     /** @var string */
     public $title;
     /** @var string */

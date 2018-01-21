@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\MemberDto;
+use Uzh\Snowpro\Data\Entity\MemberEntity;
 
 /**
  * Сущность член совета
@@ -39,5 +40,11 @@ class MemberRepository extends AbstractRepository
     public function getPrimaryKey(): string
     {
         return 'id_member';
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return MemberEntity::class;
     }
 }

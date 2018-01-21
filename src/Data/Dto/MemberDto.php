@@ -7,9 +7,9 @@
 namespace Uzh\Snowpro\Data\Dto;
 
 
-use Uzh\Snowpro\Core\Data\DtoInterface;
+use Uzh\Snowpro\Core\Data\AbstractDto;
 
-class MemberDto implements DtoInterface
+class MemberDto extends AbstractDto
 {
     /** @var int */
     public $id_member;

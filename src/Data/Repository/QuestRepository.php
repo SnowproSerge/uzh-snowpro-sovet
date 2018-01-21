@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\QuestDto;
+use Uzh\Snowpro\Data\Entity\QuestEntity;
 
 /**
  * Сущность вопрос
@@ -39,5 +40,20 @@ class QuestRepository extends AbstractRepository
     public function getPrimaryKey(): string
     {
         return 'id_quest';
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return QuestEntity::class;
+    }
+
+    /**
+     * @param $id
+     * @return QuestDto[]
+     */
+    public function getQuestsByMeetingId($id): array
+    {
+
     }
 }

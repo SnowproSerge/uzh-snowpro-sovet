@@ -23,6 +23,7 @@ class Router
 
     /**
      * Router constructor.
+     * @param $routes
      */
     public function __construct($routes)
     {

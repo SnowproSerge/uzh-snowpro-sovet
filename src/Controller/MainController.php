@@ -28,7 +28,7 @@ class MainController extends AbstractController
         $instr = new InstructorRepository($this->dbConnection);
         $this->viewParams['text'] = print_r($instr->getAllEntities(),true);
         App::logger()->addInfo('Action info');
-        return "test.twig";
+        return "index.twig";
     }
 
 }

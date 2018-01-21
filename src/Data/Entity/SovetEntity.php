@@ -7,6 +7,7 @@
 namespace Uzh\Snowpro\Data\Entity;
 
 use Uzh\Snowpro\Core\Data\AbstractEntity;
+use Uzh\Snowpro\Data\Dto\SovetDto;
 
 /**
  * Сущность Совет
@@ -35,5 +36,18 @@ class SovetEntity extends AbstractEntity
     public function setId($id): void
     {
         $this->idSovet = $id;
+    }
+
+    /**
+     * @param $dto SovetDto
+     */
+    public function init($dto): void
+    {
+        $this->setId($dto->id_sovet);
+        $this->dateSt = $dto->datest;
+        $this->dateEn = $dto->datest;
+        $this->title = $dto->title;
+        $this->digest = $dto->digest;
+        $this->setFill();
     }
 }

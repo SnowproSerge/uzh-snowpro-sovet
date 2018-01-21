@@ -6,9 +6,9 @@
 
 namespace Uzh\Snowpro\Data\Dto;
 
-use Uzh\Snowpro\Core\Data\DtoInterface;
+use Uzh\Snowpro\Core\Data\AbstractDto;
 
-class VotingDto implements DtoInterface
+class VotingDto extends AbstractDto
 {
     /** @var int */
     public $id_voting;

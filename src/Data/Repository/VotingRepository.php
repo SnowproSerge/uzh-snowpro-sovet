@@ -8,6 +8,7 @@ namespace Uzh\Snowpro\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\VotingDto;
+use Uzh\Snowpro\Data\Entity\VotingEntity;
 
 /**
  * Сущность голосование
@@ -40,4 +41,28 @@ class VotingRepository extends AbstractRepository
     {
         return 'id_voting';
     }
+
+    /**
+     * @param $questId
+     * @return VotingEntity[]
+     */
+    public function getVotingsByQuestId($questId):array
+    {
+        $dtos = $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName().' WHERE id_quest = :id',
+            [':id' => $questId],
+            $this->getClassDto());
+        return array_map(function ($dto) {
+            $vote = new VotingEntity();
+            $vote->init($dto);
+            return $vote;
+        },$dtos);
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return VotingEntity::class;
+    }
+
 }

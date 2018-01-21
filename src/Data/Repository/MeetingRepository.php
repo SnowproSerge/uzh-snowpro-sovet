@@ -7,6 +7,7 @@ namespace Uzh\Snowpro\Repository;
 
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\MeetingDto;
+use Uzh\Snowpro\Data\Entity\MeetingEntity;
 
 /**
  *
@@ -30,5 +31,11 @@ class MeetingRepository extends AbstractRepository
     public function getPrimaryKey(): string
     {
         return 'id_instr';
+    }
+
+    /** @return string */
+    public function getClassEntity(): string
+    {
+        return MeetingEntity::class;
     }
 }

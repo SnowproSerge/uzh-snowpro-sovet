@@ -8,7 +8,10 @@
 
 namespace Uzh\Snowpro\Core;
 
-
+/**
+ * Interface Request
+ * @package Uzh\Snowpro\Core
+ */
 interface Request
 {
 
