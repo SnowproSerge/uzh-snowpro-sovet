@@ -16,7 +16,7 @@ class WebExceptionHandler implements DefaultExceptionHandler
      */
     public function handleException($e): void
     {
-        App::logger()->addInfo('Error !!!');
+        App::logger()->addInfo('Error: '.$e->getMessage(),$e->getTrace());
         echo $e->getMessage(),"\n";
         echo $e->getTraceAsString(),"\n";
     }

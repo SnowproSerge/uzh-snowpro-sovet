@@ -25,12 +25,12 @@ class MeetingRepository extends AbstractRepository
 
     public function getTableName(): string
     {
-        return 'instr';
+        return 'meeting';
     }
 
     public function getPrimaryKey(): string
     {
-        return 'id_instr';
+        return 'id_meeting';
     }
 
     /** @return string */
@@ -38,4 +38,40 @@ class MeetingRepository extends AbstractRepository
     {
         return MeetingEntity::class;
     }
+
+    /**
+     * @return null|MeetingEntity
+     */
+    public function getLastMeeting()
+    {
+
+        $arr = $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName().' ORDER BY '.$this->getPrimaryKey().' DESC LIMIT 1',
+            [],
+            $this->getClassDto());
+        if(!isset($arr[0])) {
+            return null;
+        }
+        $meeting = new MeetingEntity();
+        $meeting->init($arr[0]);
+
+        return $meeting;
+    }
+    /**
+     * @param $sovetId
+     * @return MeetingEntity[]
+     */
+    public function getMeetingsBySovetId($sovetId):array
+    {
+        $dtos = $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName().' WHERE id_sovet = :id',
+            [':id' => $sovetId],
+            $this->getClassDto());
+        return array_map(function ($dto) {
+            $meeting = new MeetingEntity();
+            $meeting->init($dto);
+            return $meeting;
+        },$dtos);
+    }
+
 }

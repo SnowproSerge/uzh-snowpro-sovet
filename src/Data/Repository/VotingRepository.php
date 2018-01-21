@@ -43,7 +43,7 @@ class VotingRepository extends AbstractRepository
     }
 
     /**
-     * @param $questId
+     * @param $questId int
      * @return VotingEntity[]
      */
     public function getVotingsByQuestId($questId):array

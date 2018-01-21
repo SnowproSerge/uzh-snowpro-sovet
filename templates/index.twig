@@ -1,9 +1,10 @@
 {% extends "layouts/main.twig" %}
 {% import "macros/question.twig" as question %}
 {% block content %}
-<h1>Последний совет</h1>
- {{ sovet.title }}
-{% for quest in sovet.questions  %}
+<h1>Последнее заседание совета</h1>
+ <p>Дата заседания: {{ meeting.datesov|date("d.m.Y") }}</p>
+<h2>Рассмотренные вопросы</h2>
+{% for quest in meeting.questions  %}
     {{ question.question(quest) }}
 {% endfor %}
 {% endblock %}

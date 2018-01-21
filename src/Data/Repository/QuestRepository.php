@@ -6,6 +6,7 @@
 
 namespace Uzh\Snowpro\Data\Repository;
 
+use Uzh\Snowpro\Core\App;
 use Uzh\Snowpro\Core\Data\AbstractRepository;
 use Uzh\Snowpro\Data\Dto\QuestDto;
 use Uzh\Snowpro\Data\Entity\QuestEntity;
@@ -50,10 +51,20 @@ class QuestRepository extends AbstractRepository
 
     /**
      * @param $id
-     * @return QuestDto[]
+     * @return QuestEntity[]
      */
     public function getQuestsByMeetingId($id): array
     {
+        $dtos = $this->dbConnection->select(
+            'SELECT * FROM '.$this->getTableName().' WHERE id_meeting = :id',
+            [':id' => $id],
+            $this->getClassDto());
+        App::logger()->addInfo('SELECT * FROM '.$this->getTableName().' WHERE id_meeting = :id',[$id,print_r($dtos,true)]);
+        return array_map(function ($dto) {
+            $questEntity = new QuestEntity();
+            $questEntity->init($dto);
+            return $questEntity;
+        },$dtos);
 
     }
 }

@@ -10,7 +10,7 @@ namespace Uzh\Snowpro\Controller;
 use Uzh\Snowpro\Core\AbstractController;
 use Uzh\Snowpro\Core\App;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
-use Uzh\Snowpro\Data\Repository\SovetRepository;
+use Uzh\Snowpro\Data\Repository\MeetingRepository;
 
 class MainController extends AbstractController
 {
@@ -26,10 +26,12 @@ class MainController extends AbstractController
 
     public function indexAction()
     {
-        /** @var SovetRepository $repoSovet */
-        $repoSovet = RepositoryManager::getRepository(SovetRepository::class);
-        $this->viewParams['sovet'] = $repoSovet->getLastSovet();
-        App::logger()->addInfo('Action index',(array) $this->viewParams['sovet']);
+        /** @var MeetingRepository $repoMeet */
+        $repoMeet = RepositoryManager::getRepository(MeetingRepository::class);
+        $meeting = $repoMeet->getLastMeeting();
+        $meeting->setRelations();
+        $this->viewParams['meeting'] = $meeting;
+        App::logger()->addDebug('Action index',(array) $this->viewParams['meeting']);
         return "index.twig";
     }
 

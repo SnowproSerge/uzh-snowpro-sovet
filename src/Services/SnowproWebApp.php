@@ -17,6 +17,7 @@ class SnowproWebApp extends App
     /**
      * SnowproApp constructor.
      * @param $config
+     * @throws \Exception
      */
     public function __construct($config)
     {
