@@ -16,6 +16,7 @@ services:
     container_name: sovet_db
     volumes:
       - ./docker/db:/var/lib/mysql/
+    command: --init-file /var/lib/mysql/sovet.sql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: sovet

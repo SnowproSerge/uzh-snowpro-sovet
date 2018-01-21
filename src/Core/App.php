@@ -64,7 +64,6 @@ class App
             RepositoryManager::init($this->dbConnect,$this->logger);
             $this->auth->init();
             $controller->setAuth($this->auth);
-            $controller->setDbConnection($this->dbConnect);
             $controller->actionProcess($action, $params);
         } catch (\Exception $e) {
             $this->errorHandler->handleException($e);

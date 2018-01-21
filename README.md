@@ -1,7 +1,7 @@
 # uzh-snowpro-sovet
 
 - запуск докера
-    docker-compose up -d --build
+docker-compose up -d --build
 
 - запуск композера
 docker run --rm --interactive --tty --volume C:\work\PhpProject\uzh-snowpro-sovet:/app composer install
