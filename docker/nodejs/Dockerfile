@@ -1,6 +1,6 @@
 FROM node:latest
 RUN npm install webpack -g
-RUN npm install extract-text-webpack-plugin --save-dev
+RUN npm install i extract-text-webpack-plugin
 WORKDIR /tmp
 COPY . /tmp/
 #COPY package.json /tmp/

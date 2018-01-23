@@ -27,15 +27,23 @@ services:
     ports:
       - 3306:3306
 
-  webpack:
-    build: docker/nodejs
-    container_name: sovet_node
-    ports:
-      - 80:4000
+#  webpack:
+#    build: docker/nodejs
+#    container_name: sovet_node
+#    ports:
+#      - 80:4000
+#    volumes:
+#      - ./html:/usr/src/app/:rw
+#    environment:
+#      - NODE_ENV=dev
+  app:
+    build: ./docker/npm
+    container_name: sovet_npm
+    command: npm run dev
     volumes:
-      - ./html:/usr/src/app/:rw
-    environment:
-      - NODE_ENV=dev
+      - .:/app
+    ports:
+      - 4000:4000
 
 networks:
     backend:
