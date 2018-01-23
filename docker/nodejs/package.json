@@ -1,0 +1,15 @@
+{
+  "name": "vue-webpack-template",
+  "version": "0.0.1",
+  "description": "First proba",
+  "main": "index.js",
+  "scripts": {
+    "build": "web",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Sergey Naryshkin",
+  "devDependencies": {
+    "webpack": "^3.10.0"
+  }
+}

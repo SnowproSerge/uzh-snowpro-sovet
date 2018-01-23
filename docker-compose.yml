@@ -16,7 +16,7 @@ services:
     container_name: sovet_db
     volumes:
       - ./docker/db:/var/lib/mysql/
-    command: --init-file /var/lib/mysql/sovet.sql
+#    command: --init-file /var/lib/mysql/sovet.sql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: sovet
@@ -26,6 +26,16 @@ services:
       - backend
     ports:
       - 3306:3306
+
+  webpack:
+    build: docker/nodejs
+    container_name: sovet_node
+    ports:
+      - 80:4000
+    volumes:
+      - ./html:/usr/src/app/:rw
+    environment:
+      - NODE_ENV=dev
 
 networks:
     backend:
