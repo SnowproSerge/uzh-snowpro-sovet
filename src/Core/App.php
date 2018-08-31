@@ -13,6 +13,7 @@ use Uzh\Snowpro\Core\Config\Config;
 use Uzh\Snowpro\Core\Data\DbConnection;
 use Uzh\Snowpro\Core\Data\RepositoryManager;
 use Uzh\Snowpro\Core\Exception\RoutingException;
+use Uzh\Snowpro\Core\RestModel\RestModel;
 use Uzh\Snowpro\Core\Security\Auth;
 use Uzh\Snowpro\Core\Templater\TwigTemplater;
 use Uzh\Snowpro\ExceptionHandler\DefaultExceptionHandler;
@@ -36,6 +37,8 @@ class App
     protected $logger;
     /** @var DbConnection */
     protected $dbConnect;
+    /** @var RestModel */
+    protected $restModel;
 
     /** @var Router */
     protected $router;
