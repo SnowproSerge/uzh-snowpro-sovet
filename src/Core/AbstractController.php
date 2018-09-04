@@ -53,7 +53,7 @@ abstract class AbstractController
      *
      * @param $action
      * @param $pathParams
-     * @throws \PHPUnit\Runner\Exception
+     * @throws \Exception
      * @throws RoutingException
      */
     public function actionProcess($action, $pathParams): void
